@@ -86,7 +86,9 @@ For map height, include the CSS unit. Examples: 500px, 70vh, or 40rem.
 
 1. Interactive OpenStreetMap route with connected stops.
 2. Guided Easy Route Map setup screen.
-3. Adding route points using the visual map picker.
+3. One-click ACF route field creation.
+4. Adding route points using the visual map picker.
+5. Customise route appearance from the settings page.
 
 == Changelog ==
 
