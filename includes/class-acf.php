@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IRM_ACF
+class ERM_ACF
 {
     const REPEATER_FIELD = 'itinerary_day_items';
     const TITLE_FIELD = 'itinerary_day_item_title';

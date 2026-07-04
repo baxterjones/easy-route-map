@@ -4,12 +4,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class IRM_Shortcode
+class ERM_Shortcode
 {
     public function __construct()
     {
         add_shortcode('easy_route_map', [$this, 'render']);
-        add_shortcode('itinerary_route_map', [$this, 'render']); // Backwards-compatible legacy shortcode.
     }
 
     public function render($atts)
@@ -32,8 +31,8 @@ class IRM_Shortcode
             return '';
         }
 
-        $stops = IRM_ACF::get_stops($post_id);
+        $stops = ERM_ACF::get_stops($post_id);
 
-        return IRM_Map::render($stops);
+        return ERM_Map::render($stops);
     }
 }

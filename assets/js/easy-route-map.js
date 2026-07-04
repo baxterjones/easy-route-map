@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const mapEl = document.getElementById('irm-map');
+    const mapEl = document.getElementById('erm-map');
 
     if (!mapEl) {
         return;
@@ -73,14 +73,14 @@ document.addEventListener('DOMContentLoaded', function () {
         let leanClass = '';
 
         if (offset < 0) {
-            leanClass = ' irm-marker__pin--left';
+            leanClass = ' erm-marker__pin--left';
         } else if (offset > 0) {
-            leanClass = ' irm-marker__pin--right';
+            leanClass = ' erm-marker__pin--right';
         }
 
         return L.divIcon({
-            className: 'irm-marker',
-            html: '<span class="irm-marker__pin' + leanClass + '" style="--irm-marker-offset-x:' + offset + 'px;"><span class="irm-marker__number">' + dayNumber + '</span></span>',
+            className: 'erm-marker',
+            html: '<span class="erm-marker__pin' + leanClass + '" style="--erm-marker-offset-x:' + offset + 'px;"><span class="erm-marker__number">' + dayNumber + '</span></span>',
             iconSize: [46, 52],
             iconAnchor: [23, 46],
             popupAnchor: [offset, -46]
@@ -139,10 +139,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const offsets = getNearbyOffsetData(points, map);
 
         points.forEach(function (point, index) {
-            let popup = '<div class="irm-popup"><strong>Point ' + point.dayNumber + '</strong>';
+            let popup = '<div class="erm-popup"><strong>Point ' + point.dayNumber + '</strong>';
 
             if (point.description) {
-                popup += '<div class="irm-popup__description">' + point.description + '</div>';
+                popup += '<div class="erm-popup__description">' + point.description + '</div>';
             }
 
             popup += '</div>';

@@ -1,4 +1,4 @@
-<div class="wrap irm-admin-page">
+<div class="wrap erm-admin-page">
 
     <h1>Easy Route Map</h1>
 
@@ -18,26 +18,22 @@
 
     <code>[easy_route_map id="123"]</code>
 
-    <p class="description">
-        Legacy shortcode support is included for existing installs: <code>[itinerary_route_map]</code> still works.
-    </p>
-
     <h2>Settings</h2>
 
     <form method="post" action="">
-        <?php wp_nonce_field('irm_save_settings', 'irm_settings_nonce'); ?>
+        <?php wp_nonce_field('erm_save_settings', 'erm_settings_nonce'); ?>
 
         <table class="form-table" role="presentation">
             <tbody>
                 <tr>
                     <th scope="row">
-                        <label for="irm_marker_color">Marker colour</label>
+                        <label for="erm_marker_color">Marker colour</label>
                     </th>
                     <td>
                         <input
                             type="text"
-                            id="irm_marker_color"
-                            name="irm_marker_color"
+                            id="erm_marker_color"
+                            name="erm_marker_color"
                             value="<?php echo esc_attr($marker_color); ?>"
                             class="regular-text"
                             placeholder="#3d874d"
@@ -48,13 +44,13 @@
 
                 <tr>
                     <th scope="row">
-                        <label for="irm_route_color">Route colour</label>
+                        <label for="erm_route_color">Route colour</label>
                     </th>
                     <td>
                         <input
                             type="text"
-                            id="irm_route_color"
-                            name="irm_route_color"
+                            id="erm_route_color"
+                            name="erm_route_color"
                             value="<?php echo esc_attr($route_color); ?>"
                             class="regular-text"
                             placeholder="#3388ff"

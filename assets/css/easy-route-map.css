@@ -1,4 +1,4 @@
-.irm-map {
+.erm-map {
     width: 100%;
     height: 520px;
     min-height: 520px;
@@ -6,39 +6,39 @@
     overflow: hidden;
 }
 
-.irm-map__notice {
+.erm-map__notice {
     margin: 0;
 }
 
-.irm-marker {
+.erm-marker {
     background: transparent;
     border: 0;
 }
 
-.irm-marker__pin {
+.erm-marker__pin {
     position: relative;
     width: 34px;
     height: 34px;
-    background: var(--irm-marker-color, #3d874d);
+    background: var(--erm-marker-color, #3d874d);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50% 50% 50% 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
-    transform: translateX(var(--irm-marker-offset-x, 0)) rotate(-45deg);
+    transform: translateX(var(--erm-marker-offset-x, 0)) rotate(-45deg);
     transform-origin: 50% 50%;
 }
 
-.irm-marker__pin--left {
-    transform: translateX(var(--irm-marker-offset-x, 0)) translateY(-2px) rotate(-57deg);
+.erm-marker__pin--left {
+    transform: translateX(var(--erm-marker-offset-x, 0)) translateY(-2px) rotate(-57deg);
 }
 
-.irm-marker__pin--right {
-    transform: translateX(var(--irm-marker-offset-x, 0)) translateY(2px) rotate(-33deg);
+.erm-marker__pin--right {
+    transform: translateX(var(--erm-marker-offset-x, 0)) translateY(2px) rotate(-33deg);
 }
 
-.irm-marker__number {
+.erm-marker__number {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -50,31 +50,31 @@
     transform: rotate(45deg);
 }
 
-.irm-marker__pin--left .irm-marker__number {
+.erm-marker__pin--left .erm-marker__number {
     transform: rotate(57deg);
 }
 
-.irm-marker__pin--right .irm-marker__number {
+.erm-marker__pin--right .erm-marker__number {
     transform: rotate(33deg);
 }
 
-.irm-map .leaflet-popup-content-wrapper {
+.erm-map .leaflet-popup-content-wrapper {
     border-radius: 0;
 }
 
-.irm-map .leaflet-popup-content {
+.erm-map .leaflet-popup-content {
     margin: 14px 16px;
 }
 
-.irm-popup strong {
+.erm-popup strong {
     display: block;
     margin-bottom: 6px;
 }
 
-.irm-popup__description > *:first-child {
+.erm-popup__description > *:first-child {
     margin-top: 0;
 }
 
-.irm-popup__description > *:last-child {
+.erm-popup__description > *:last-child {
     margin-bottom: 0;
 }

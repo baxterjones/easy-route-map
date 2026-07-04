@@ -51,9 +51,6 @@ Target a specific post ID:
 
 [easy_route_map id="123"]
 
-Legacy shortcode support is included:
-
-[itinerary_route_map]
 
 == Expected ACF Fields ==
 

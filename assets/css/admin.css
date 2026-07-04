@@ -1,9 +1,9 @@
-.irm-admin-page code {
+.erm-admin-page code {
     display: inline-block;
     padding: 4px 8px;
     background: #f0f0f1;
 }
 
-.irm-admin-page .form-table input[type="text"] {
+.erm-admin-page .form-table input[type="text"] {
     max-width: 220px;
 }

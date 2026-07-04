@@ -6,7 +6,7 @@
 
 - Renamed the plugin from Itinerary Route Map to Easy Route Map.
 - Added the new `[easy_route_map]` shortcode.
-- Kept `[itinerary_route_map]` as a backwards-compatible legacy shortcode.
+- Removed the old shortcode and standardised the plugin namespace to `erm`.
 - Fixed renamed frontend asset paths for CSS and JavaScript.
 - Updated admin wording from itinerary stops to route points.
 - Updated documentation, requirements and roadmap.

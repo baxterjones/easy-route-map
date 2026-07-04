@@ -13,11 +13,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('IRM_VERSION', '1.0.0');
-define('IRM_PLUGIN_FILE', __FILE__);
-define('IRM_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('IRM_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('ERM_VERSION', '1.0.0');
+define('ERM_PLUGIN_FILE', __FILE__);
+define('ERM_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('ERM_PLUGIN_URL', plugin_dir_url(__FILE__));
 
-require_once IRM_PLUGIN_PATH . 'includes/class-plugin.php';
+require_once ERM_PLUGIN_PATH . 'includes/class-plugin.php';
 
-IRM_Plugin::instance();
+ERM_Plugin::instance();
