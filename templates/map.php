@@ -2,7 +2,7 @@
 
 <?php if (empty($stops)) : ?>
 
-    <p class="irm-map__notice">No itinerary stops found.</p>
+    <p class="irm-map__notice">No route points found.</p>
 
 <?php else : ?>
 

@@ -12,7 +12,7 @@ class IRM_ACF
     const LOCATION_FIELD = 'itinerary_day_item_location_coordinates';
 
     /**
-     * Get itinerary stops from the current post's ACF repeater.
+     * Get route points from the current post's ACF repeater.
      *
      * @param int $post_id
      * @return array<int,array<string,mixed>>

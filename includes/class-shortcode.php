@@ -8,7 +8,8 @@ class IRM_Shortcode
 {
     public function __construct()
     {
-        add_shortcode('itinerary_route_map', [$this, 'render']);
+        add_shortcode('easy_route_map', [$this, 'render']);
+        add_shortcode('itinerary_route_map', [$this, 'render']); // Backwards-compatible legacy shortcode.
     }
 
     public function render($atts)
@@ -18,7 +19,7 @@ class IRM_Shortcode
                 'id' => 0,
             ],
             $atts,
-            'itinerary_route_map'
+            'easy_route_map'
         );
 
         $post_id = absint($atts['id']);

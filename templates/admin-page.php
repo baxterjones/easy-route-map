@@ -1,22 +1,26 @@
 <div class="wrap irm-admin-page">
 
-    <h1>Itinerary Route Map</h1>
+    <h1>Easy Route Map</h1>
 
     <p>
-        This plugin creates a single interactive Leaflet route map from an ACF repeater containing OpenStreetMap location fields.
+        Easy Route Map creates an interactive Leaflet route map from ACF repeater fields containing OpenStreetMap location data.
     </p>
 
     <hr>
 
     <h2>Shortcode</h2>
 
-    <p>Add this shortcode to an itinerary page:</p>
+    <p>Add this shortcode to any post, page, or custom post type entry that has route point data:</p>
 
-    <code>[itinerary_route_map]</code>
+    <code>[easy_route_map]</code>
 
     <p>You can also target a specific post ID:</p>
 
-    <code>[itinerary_route_map id="123"]</code>
+    <code>[easy_route_map id="123"]</code>
+
+    <p class="description">
+        Legacy shortcode support is included for existing installs: <code>[itinerary_route_map]</code> still works.
+    </p>
 
     <h2>Settings</h2>
 
@@ -71,10 +75,14 @@
     <ul>
         <li>Advanced Custom Fields</li>
         <li>ACF OpenStreetMap Field</li>
-        <li>An itinerary repeater field on the current post</li>
+        <li>An ACF repeater field containing route points on the current post</li>
     </ul>
 
     <h2>Expected ACF Fields</h2>
+
+    <p>
+        This version keeps the existing ACF field names for compatibility. The labels below explain how Easy Route Map uses them.
+    </p>
 
     <table class="widefat striped">
 
@@ -90,13 +98,13 @@
             <tr>
                 <td><code>itinerary_day_items</code></td>
                 <td>Repeater</td>
-                <td>Each row is treated as one route stop.</td>
+                <td>Each row is treated as one route point.</td>
             </tr>
 
             <tr>
                 <td><code>itinerary_day_item_title</code></td>
                 <td>Text</td>
-                <td>Used internally as the stop title.</td>
+                <td>Used internally as the route point title.</td>
             </tr>
 
             <tr>
@@ -108,10 +116,19 @@
             <tr>
                 <td><code>itinerary_day_item_location_description</code></td>
                 <td>Textarea / WYSIWYG / Text</td>
-                <td>Optional. Displayed inside the marker popup below the day heading.</td>
+                <td>Optional. Displayed inside the marker popup below the point number.</td>
             </tr>
         </tbody>
 
     </table>
+
+    <h2>Roadmap</h2>
+
+    <ul>
+        <li>Built-in route point fields without requiring ACF</li>
+        <li>Visual pin picker for adding route points directly on a map</li>
+        <li>Setup wizard for first-time users</li>
+        <li>Optional ACF/custom field mapping</li>
+    </ul>
 
 </div>

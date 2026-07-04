@@ -47,9 +47,9 @@ class IRM_Plugin
 
         wp_enqueue_style(
             'irm-style',
-            IRM_PLUGIN_URL . 'assets/css/itinerary-route-map.css',
+            IRM_PLUGIN_URL . 'assets/css/easy-route-map.css',
             ['irm-leaflet'],
-            filemtime(IRM_PLUGIN_PATH . 'assets/css/itinerary-route-map.css')
+            filemtime(IRM_PLUGIN_PATH . 'assets/css/easy-route-map.css')
         );
 
         wp_enqueue_script(
@@ -62,16 +62,16 @@ class IRM_Plugin
 
         wp_enqueue_script(
             'irm-script',
-            IRM_PLUGIN_URL . 'assets/js/itinerary-route-map.js',
+            IRM_PLUGIN_URL . 'assets/js/easy-route-map.js',
             ['irm-leaflet'],
-            filemtime(IRM_PLUGIN_PATH . 'assets/js/itinerary-route-map.js'),
+            filemtime(IRM_PLUGIN_PATH . 'assets/js/easy-route-map.js'),
             true
         );
     }
 
     public function enqueue_admin($hook)
     {
-        if ($hook !== 'tools_page_itinerary-route-map') {
+        if ($hook !== 'tools_page_easy-route-map') {
             return;
         }
 

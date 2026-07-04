@@ -14,10 +14,10 @@ class IRM_Admin
     public function menu()
     {
         add_management_page(
-            'Itinerary Route Map',
-            'Itinerary Route Map',
+            'Easy Route Map',
+            'Easy Route Map',
             'manage_options',
-            'itinerary-route-map',
+            'easy-route-map',
             [$this, 'page']
         );
     }
@@ -43,7 +43,7 @@ class IRM_Admin
             update_option(IRM_Plugin::OPTION_MARKER_COLOR, $marker_color);
             update_option(IRM_Plugin::OPTION_ROUTE_COLOR, $route_color);
 
-            echo '<div class="notice notice-success is-dismissible"><p>Itinerary Route Map settings saved.</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p>Easy Route Map settings saved.</p></div>';
         }
 
         $marker_color = get_option(IRM_Plugin::OPTION_MARKER_COLOR, IRM_Plugin::DEFAULT_MARKER_COLOR);
