@@ -1,8 +1,8 @@
 .erm-map {
     width: 100%;
-    height: 520px;
-    min-height: 520px;
-    border-radius: 12px;
+    height: var(--erm-map-height, 500px);
+    min-height: var(--erm-map-height, 500px);
+    border-radius: var(--erm-border-radius, 12px);
     overflow: hidden;
 }
 
@@ -77,4 +77,18 @@
 
 .erm-popup__description > *:last-child {
     margin-bottom: 0;
+}
+
+.erm-map__notice {
+    padding: 14px 16px;
+    border: 1px solid #dcdcde;
+    background: #fff;
+}
+
+.erm-map__notice ul {
+    margin: 8px 0 0 18px;
+}
+
+.erm-map__notice--info {
+    margin-bottom: 12px;
 }

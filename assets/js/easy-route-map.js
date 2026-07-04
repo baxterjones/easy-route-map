@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const configuredRouteColor = mapEl.dataset.routeColor || '#3388ff';
     const routeColor = /^#[0-9a-f]{6}$/i.test(configuredRouteColor) ? configuredRouteColor : '#3388ff';
+    const markerLabel = (mapEl.dataset.markerLabel || 'Stop').trim() || 'Stop';
 
     function getNearbyOffsetData(points, map) {
         const threshold = 42;
@@ -139,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const offsets = getNearbyOffsetData(points, map);
 
         points.forEach(function (point, index) {
-            let popup = '<div class="erm-popup"><strong>Point ' + point.dayNumber + '</strong>';
+            let popup = '<div class="erm-popup"><strong>' + markerLabel + ' ' + point.dayNumber + '</strong>';
 
             if (point.description) {
                 popup += '<div class="erm-popup__description">' + point.description + '</div>';

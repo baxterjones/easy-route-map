@@ -1,90 +1,115 @@
 === Easy Route Map ===
 Contributors: baxtersweb
-Tags: route map, openstreetmap, leaflet, acf, travel, itinerary, maps
-Requires at least: 6.7
-Tested up to: 6.7
-Requires PHP: 8.1
-Stable tag: 1.0.0
+Tags: maps, openstreetmap, leaflet, routes, travel
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create interactive OpenStreetMap route maps from route point fields in WordPress.
+Create beautiful OpenStreetMap route maps directly from your WordPress posts, pages, and custom post types.
 
 == Description ==
 
-Easy Route Map is a lightweight WordPress plugin for creating interactive route maps with OpenStreetMap and Leaflet.
+Easy Route Map helps you create interactive route maps connected directly to your WordPress content.
 
-It is built for route-based content: tours, safaris, travel itineraries, trails, delivery routes, event routes and other multi-stop journeys.
+Instead of creating separate maps and embedding them manually, Easy Route Map lets you manage route points directly inside posts, pages, or custom post types.
 
-Most map plugins are embed-first: create a map somewhere, copy a shortcode, then paste it into a page.
+Perfect for:
 
-Easy Route Map is content-first: route points live on the post, page, or custom post type entry, and the map is generated from that content.
+* Travel itineraries
+* Safari routes
+* Hiking trails
+* Cycling routes
+* Road trips
+* Delivery routes
+* Multi-location guides
 
-== Features ==
+Easy Route Map uses OpenStreetMap and Leaflet, so no Google Maps API key is required.
 
-* Interactive OpenStreetMap maps
-* Leaflet-powered frontend display
-* Numbered route point markers
-* Automatic route drawing with fallback route line
-* Smart overlapping marker support
-* Custom marker and route colours
-* Responsive design
-* ACF repeater integration
-* Lightweight and theme independent
+= Features =
 
-== Current Requirements ==
+* Interactive OpenStreetMap route maps
+* Add route points directly inside WordPress content
+* Visual location picker
+* Route lines between points
+* Titles and descriptions for each point
+* Custom route colour, map height, border radius, and marker label settings
+* Works with custom post types
+* One-click field setup
+* Lightweight frontend output
 
-* WordPress 6.7+
-* PHP 8.1+
-* Advanced Custom Fields (ACF)
+= Requirements =
+
+Easy Route Map currently requires:
+
+* Advanced Custom Fields
 * ACF OpenStreetMap Field
 
-This first version keeps the original ACF-based workflow. Built-in route point fields without an ACF dependency are planned for a future version.
+The setup screen will guide you through installing and configuring the required fields.
 
-== Shortcode ==
-
-Use the shortcode on a post, page, or custom post type entry that contains route point data:
-
-[easy_route_map]
-
-Target a specific post ID:
-
-[easy_route_map id="123"]
-
-
-== Expected ACF Fields ==
-
-This version expects the existing field names below:
-
-* itinerary_day_items - Repeater. Each row is treated as one route point.
-* itinerary_day_item_title - Text. Route point title.
-* itinerary_day_item_location_coordinates - OpenStreetMap. Marker coordinates.
-* itinerary_day_item_location_description - Textarea / WYSIWYG / Text. Optional popup description.
-
-== Roadmap ==
-
-* Built-in route point fields without requiring ACF
-* Visual pin picker for adding route points directly on a map
-* Setup wizard for first-time users
-* Optional ACF/custom field mapping
-* Additional marker styles and route display options
+Future versions aim to include built-in route fields without additional dependencies.
 
 == Installation ==
 
-1. Upload the plugin folder to `/wp-content/plugins/` or install the plugin zip from the WordPress admin area.
-2. Activate Easy Route Map.
-3. Add the expected ACF route point fields to the post type where you want maps.
-4. Add `[easy_route_map]` to display the map.
+1. Upload and activate Easy Route Map.
+2. Open the Easy Route Map admin page.
+3. Check the requirements.
+4. Click "Set up ACF fields for me".
+5. Add route points to your content.
+6. Display the map using:
+
+[easy_route_map]
+
+== Frequently Asked Questions ==
+
+= Do I need a Google Maps API key? =
+
+No. Easy Route Map uses OpenStreetMap.
+
+= Does this work with custom post types? =
+
+Yes. Easy Route Map works with posts, pages, and custom post types.
+
+= Can I create travel itineraries? =
+
+Yes. Travel routes and itineraries are one of the main use cases.
+
+= Can I customise the map appearance? =
+
+Yes. You can change the route colour, marker colour, map height, border radius, and marker label from the settings.
+
+For map height, include the CSS unit. Examples: 500px, 70vh, or 40rem.
+
+== Screenshots ==
+
+1. Interactive OpenStreetMap route with connected stops.
+2. Guided Easy Route Map setup screen.
+3. Adding route points using the visual map picker.
 
 == Changelog ==
 
+= 1.0.5 =
+* Added map height setting.
+* Added border radius setting.
+* Added marker label setting with custom label support.
+
+= 1.0.4 =
+* Improved setup experience.
+* Added dedicated admin menu.
+* Improved generated field layout.
+* Improved default map settings.
+
+= 1.0.3 =
+* Prevent duplicate field setup.
+
+= 1.0.2 =
+* Improved onboarding.
+* Added uninstall data preference.
+
+= 1.0.1 =
+* Added automated ACF field setup.
+
 = 1.0.0 =
-* Initial Easy Route Map release.
-* Interactive OpenStreetMap integration.
-* Numbered route point markers.
-* Automatic route drawing with fallback route line.
-* Overlapping marker support.
-* Custom marker and route colours.
-* ACF repeater integration.
-* Responsive layout.
-* Theme-independent implementation.
+* Initial release.

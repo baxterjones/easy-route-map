@@ -1,100 +1,112 @@
-# 🧭 Easy Route Map
+# Easy Route Map
 
-A lightweight WordPress plugin for creating interactive route maps with **OpenStreetMap** and **Leaflet**.
+Create beautiful OpenStreetMap route maps directly from your WordPress posts, pages, and custom post types.
 
-Easy Route Map is built for route-based content: tours, safaris, travel itineraries, trails, delivery routes, event routes and other multi-stop journeys.
+Easy Route Map lets you add multiple route points to your content and automatically display a connected route map. Perfect for travel itineraries, tours, trails, road trips, and location-based content.
 
----
-
-## Why Easy Route Map?
-
-Most map plugins are embed-first: create a map somewhere, copy a shortcode, then paste it into a page.
-
-Easy Route Map is content-first: route points live on the post, page, or custom post type entry, and the map is generated from that content.
-
----
+No Google Maps API key required.
 
 ## Features
 
-- Interactive OpenStreetMap maps
-- Leaflet-powered frontend display
-- Numbered route point markers
-- Automatic route drawing with fallback route line
-- Smart overlapping marker support
-- Custom marker and route colours
-- Responsive design
-- ACF repeater integration
-- Lightweight and theme independent
+- 🗺️ Create interactive OpenStreetMap route maps
+- 📍 Add multiple route points with a visual map picker
+- 🔗 Automatically connect points into a route
+- 📝 Add titles and descriptions to each stop
+- 🔄 Reorder points easily
+- 🎨 Custom route colour, map height, border radius, and marker label settings
+- ⚡ Lightweight Leaflet-powered frontend
+- 🧩 Works with posts, pages, and custom post types
+- 🛠️ One-click field setup
 
----
+## Perfect For
 
-## Current Requirements
+- Travel itineraries
+- Safari routes
+- Hiking trails
+- Cycling routes
+- Road trips
+- Delivery routes
+- Multi-location guides
 
-- WordPress 6.7+
-- PHP 8.1+
-- Advanced Custom Fields (ACF)
+## How It Works
+
+### 1. Install Requirements
+
+Easy Route Map currently uses:
+
+- Advanced Custom Fields
 - ACF OpenStreetMap Field
 
-This first version keeps the original ACF-based workflow. Built-in route point fields without an ACF dependency are planned for a future version.
+The setup screen will guide you through the requirements.
 
----
+### 2. Create Route Fields
 
-## Shortcode
+Click:
 
-Use the shortcode on a post, page, or custom post type entry that contains route point data:
+"Set up ACF fields for me"
 
-```text
+Easy Route Map automatically creates the required fields.
+
+No manual field configuration required.
+
+### 3. Add Route Points
+
+Edit your post, page, or custom post type.
+
+Add:
+
+- Point title
+- Point description
+- Map location
+
+Repeat for each stop in your route.
+
+### 4. Display Your Map
+
+Add the shortcode:
+
 [easy_route_map]
-```
 
-Target a specific post ID:
+Your route map will automatically display using the route points from the current content.
 
-```text
-[easy_route_map id="123"]
-```
+## Why Easy Route Map?
 
+Most map plugins require creating a separate map and embedding it afterwards.
 
----
+Easy Route Map is content-first.
 
-## Expected ACF Fields
+Your route belongs to your post, making it easier to manage large collections of tours, destinations, guides, or journeys.
 
-This version expects the existing field names below:
+## Requirements
 
-| Field | Type | Purpose |
-| --- | --- | --- |
-| `itinerary_day_items` | Repeater | Each row is treated as one route point. |
-| `itinerary_day_item_title` | Text | Route point title. |
-| `itinerary_day_item_location_coordinates` | OpenStreetMap | Marker coordinates. |
-| `itinerary_day_item_location_description` | Textarea / WYSIWYG / Text | Optional popup description. |
-
----
+- WordPress 6.0+
+- PHP 7.4+
+- Advanced Custom Fields
+- ACF OpenStreetMap Field
 
 ## Roadmap
 
-- Built-in route point fields without requiring ACF
-- Visual pin picker for adding route points directly on a map
-- Setup wizard for first-time users
-- Optional ACF/custom field mapping
-- Additional marker styles and route display options
+- Built-in route fields without dependencies
+- Gutenberg block
+- More marker customisation
+- Additional field source support
 
----
+## Credits
 
-## Changelog
+Built with:
 
-See [CHANGELOG.md](CHANGELOG.md).
+- Leaflet
+- OpenStreetMap
 
----
+## Display Settings
+
+Easy Route Map includes simple appearance controls so the map can fit different themes:
+
+- Map height, for example `500px`, `70vh`, or `40rem`
+- Border radius, for example `12px`, `1rem`, or `50%`
+- Marker label prefix, for example Stop, Point, Day, Location, or a custom label
+- Marker and route colours
 
 ## License
 
-Released under the GPL v2 or later licence.
-
----
-
-## Developed by
-
-**Baxtersweb**
-
-Practical WordPress solutions built for real businesses.
-
-https://baxtersweb.com
+GPL v2 or later

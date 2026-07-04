@@ -31,8 +31,8 @@ class ERM_Shortcode
             return '';
         }
 
-        $stops = ERM_ACF::get_stops($post_id);
+        $route_data = ERM_ACF::get_route_points($post_id);
 
-        return ERM_Map::render($stops);
+        return ERM_Map::render($route_data['stops'], $route_data['diagnostics']);
     }
 }
