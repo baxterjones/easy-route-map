@@ -4,23 +4,32 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class ERM_Plugin
+class BXTR_Maps_Plugin
 {
-    const OPTION_MARKER_COLOR = 'erm_marker_color';
-    const OPTION_ROUTE_COLOR = 'erm_route_color';
-    const OPTION_FIELD_POST_TYPES = 'erm_field_post_types';
-    const OPTION_FIELD_SETUP_DONE = 'erm_acf_field_setup_done';
-    const OPTION_UNINSTALL_MODE = 'erm_uninstall_mode';
-    const OPTION_MAP_HEIGHT = 'erm_map_height';
-    const OPTION_BORDER_RADIUS = 'erm_border_radius';
-    const OPTION_MARKER_LABEL = 'erm_marker_label';
-    const OPTION_CUSTOM_MARKER_LABEL = 'erm_custom_marker_label';
+    const OPTION_MARKER_COLOR = 'bxtr_marker_color';
+    const OPTION_ROUTE_COLOR = 'bxtr_route_color';
+    const OPTION_MARKER_NUMBER_COLOR = 'bxtr_marker_number_color';
+    const OPTION_FIELD_POST_TYPES = 'bxtr_field_post_types';
+    const OPTION_FIELD_SETUP_DONE = 'bxtr_acf_field_setup_done';
+    const OPTION_UNINSTALL_MODE = 'bxtr_uninstall_mode';
+    const OPTION_MAP_HEIGHT = 'bxtr_map_height';
+    const OPTION_BORDER_RADIUS = 'bxtr_border_radius';
+    const OPTION_MARKER_SEQUENCE = 'bxtr_marker_sequence';
+    const OPTION_DRAW_ROUTE = 'bxtr_draw_route';
+    const OPTION_POI_ENABLED = 'bxtr_poi_enabled';
+    const OPTION_POI_MARKER_COLOR = 'bxtr_poi_marker_color';
+    const OPTION_POI_ICON_MODE = 'bxtr_poi_icon_mode';
+    const OPTION_MAP_TILE_STYLE = 'bxtr_map_tile_style';
     const DEFAULT_MARKER_COLOR = '#3d874d';
     const DEFAULT_ROUTE_COLOR = '#3388ff';
+    const DEFAULT_MARKER_NUMBER_COLOR = '#ffffff';
     const DEFAULT_MAP_HEIGHT = '500px';
     const DEFAULT_BORDER_RADIUS = '12px';
-    const DEFAULT_MARKER_LABEL = 'Stop';
-    const FIELD_GROUP_KEY = 'group_erm_route_map';
+    const DEFAULT_MARKER_SEQUENCE = 'alphabetic';
+    const DEFAULT_POI_MARKER_COLOR = '#f59e0b';
+    const DEFAULT_POI_ICON_MODE = 'none';
+    const DEFAULT_MAP_TILE_STYLE = 'osm';
+    const FIELD_GROUP_KEY = 'group_bxtr_maps';
 
     private static $instance = null;
 
@@ -35,25 +44,25 @@ class ERM_Plugin
 
     private function __construct()
     {
-        require_once ERM_PLUGIN_PATH . 'includes/class-admin.php';
-        require_once ERM_PLUGIN_PATH . 'includes/class-acf.php';
-        require_once ERM_PLUGIN_PATH . 'includes/class-map.php';
-        require_once ERM_PLUGIN_PATH . 'includes/class-shortcode.php';
+        require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-admin.php';
+        require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-acf.php';
+        require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-map.php';
+        require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-shortcode.php';
 
-        new ERM_Admin();
-        new ERM_Shortcode();
+        new BXTR_Maps_Admin();
+        new BXTR_Maps_Shortcode();
 
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
-        add_filter('plugin_action_links_' . plugin_basename(ERM_PLUGIN_FILE), [$this, 'plugin_action_links']);
+        add_filter('plugin_action_links_' . plugin_basename(BXTR_MAPS_PLUGIN_FILE), [$this, 'plugin_action_links']);
     }
 
     public function plugin_action_links($links)
     {
         $settings_link = sprintf(
             '<a href="%s">%s</a>',
-            esc_url(admin_url('admin.php?page=easy-route-map')),
-            esc_html__('Settings', 'easy-route-map')
+            esc_url(admin_url('tools.php?page=baxtersweb-maps')),
+            esc_html__('Settings', 'baxtersweb-maps')
         );
 
         array_unshift($links, $settings_link);
@@ -64,61 +73,99 @@ class ERM_Plugin
     public function enqueue_frontend()
     {
         wp_enqueue_style(
-            'erm-leaflet',
-            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+            'bxtr-leaflet',
+            BXTR_MAPS_PLUGIN_URL . 'assets/vendor/leaflet/leaflet.css',
             [],
             '1.9.4'
         );
 
         wp_enqueue_style(
-            'erm-style',
-            ERM_PLUGIN_URL . 'assets/css/easy-route-map.css',
-            ['erm-leaflet'],
-            filemtime(ERM_PLUGIN_PATH . 'assets/css/easy-route-map.css')
+            'bxtr-style',
+            BXTR_MAPS_PLUGIN_URL . 'assets/css/baxtersweb-maps.css',
+            ['bxtr-leaflet'],
+            filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/css/baxtersweb-maps.css')
         );
 
         wp_enqueue_script(
-            'erm-leaflet',
-            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+            'bxtr-leaflet',
+            BXTR_MAPS_PLUGIN_URL . 'assets/vendor/leaflet/leaflet.js',
             [],
             '1.9.4',
             true
         );
 
         wp_enqueue_script(
-            'erm-script',
-            ERM_PLUGIN_URL . 'assets/js/easy-route-map.js',
-            ['erm-leaflet'],
-            filemtime(ERM_PLUGIN_PATH . 'assets/js/easy-route-map.js'),
+            'bxtr-script',
+            BXTR_MAPS_PLUGIN_URL . 'assets/js/baxtersweb-maps.js',
+            ['bxtr-leaflet'],
+            filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/js/baxtersweb-maps.js'),
             true
         );
     }
 
     public function enqueue_admin($hook)
     {
-        if ($hook === 'toplevel_page_easy-route-map') {
+        if ($hook === 'tools_page_baxtersweb-maps') {
             wp_enqueue_style(
-                'erm-admin',
-                ERM_PLUGIN_URL . 'assets/css/admin.css',
+                'bxtr-leaflet',
+                BXTR_MAPS_PLUGIN_URL . 'assets/vendor/leaflet/leaflet.css',
                 [],
-                filemtime(ERM_PLUGIN_PATH . 'assets/css/admin.css')
+                '1.9.4'
+            );
+
+            wp_enqueue_style(
+                'bxtr-style',
+                BXTR_MAPS_PLUGIN_URL . 'assets/css/baxtersweb-maps.css',
+                ['bxtr-leaflet'],
+                filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/css/baxtersweb-maps.css')
+            );
+
+            wp_enqueue_style(
+                'bxtr-admin',
+                BXTR_MAPS_PLUGIN_URL . 'assets/css/admin.css',
+                ['bxtr-style'],
+                filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/css/admin.css')
             );
 
             wp_enqueue_script(
-                'erm-admin',
-                ERM_PLUGIN_URL . 'assets/js/admin.js',
+                'bxtr-leaflet',
+                BXTR_MAPS_PLUGIN_URL . 'assets/vendor/leaflet/leaflet.js',
                 [],
-                filemtime(ERM_PLUGIN_PATH . 'assets/js/admin.js'),
+                '1.9.4',
                 true
+            );
+
+            wp_enqueue_script(
+                'bxtr-admin',
+                BXTR_MAPS_PLUGIN_URL . 'assets/js/admin.js',
+                ['bxtr-leaflet'],
+                filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/js/admin.js'),
+                true
+            );
+
+            wp_localize_script(
+                'bxtr-admin',
+                'BXTRMapsAdmin',
+                [
+                    'copy' => __('Copy', 'baxtersweb-maps'),
+                    'copied' => __('Copied', 'baxtersweb-maps'),
+                    'pointOfInterest' => __('Hotel', 'baxtersweb-maps'),
+                    'exampleExtraMarker' => __('Example supporting point.', 'baxtersweb-maps'),
+                    'stopA' => __('Marker A', 'baxtersweb-maps'),
+                    'stopB' => __('Marker B', 'baxtersweb-maps'),
+                    'exampleRouteStop' => __('Example route marker popup content.', 'baxtersweb-maps'),
+                    'clickedMarkerTitle' => __('Example Map Marker', 'baxtersweb-maps'),
+                    'clickedMarkerDescription' => __('This is dummy popup content so you can preview the marker and popup styling.', 'baxtersweb-maps'),
+                ]
             );
         }
 
         if (in_array($hook, ['post.php', 'post-new.php'], true)) {
             wp_enqueue_script(
-                'erm-admin-editor',
-                ERM_PLUGIN_URL . 'assets/js/admin.js',
+                'bxtr-admin-editor',
+                BXTR_MAPS_PLUGIN_URL . 'assets/js/admin.js',
                 ['wp-data', 'wp-dom-ready'],
-                filemtime(ERM_PLUGIN_PATH . 'assets/js/admin.js'),
+                filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/js/admin.js'),
                 true
             );
         }

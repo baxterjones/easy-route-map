@@ -1,0 +1,121 @@
+.bxtr-map {
+    width: 100%;
+    height: var(--bxtr-map-height, 500px);
+    min-height: var(--bxtr-map-height, 500px);
+    border-radius: var(--bxtr-border-radius, 12px);
+    overflow: hidden;
+}
+
+.bxtr-map__notice {
+    margin: 0;
+    padding: 14px 16px;
+    border: 1px solid #dcdcde;
+    background: #fff;
+}
+
+.bxtr-map__notice--info {
+    margin-bottom: 12px;
+}
+
+.bxtr-marker {
+    background: transparent;
+    border: 0;
+}
+
+.bxtr-marker__route {
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 40px;
+    color: var(--bxtr-marker-color, #3d874d);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.28));
+}
+
+.bxtr-marker__route-svg {
+    display: block;
+    width: 30px;
+    height: 40px;
+}
+
+.bxtr-marker__number {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 18px;
+    color: var(--bxtr-marker-number-color, #fff);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.bxtr-marker__poi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    max-width: 120px;
+    padding: 3px 8px;
+    background: var(--bxtr-poi-marker-color, #f59e0b);
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bxtr-map .leaflet-popup-content-wrapper {
+    border-radius: 0;
+}
+
+.bxtr-map .leaflet-popup-content {
+    margin: 14px 16px;
+}
+
+.bxtr-popup strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.bxtr-popup__description > *:first-child {
+    margin-top: 0;
+}
+
+.bxtr-popup__description > *:last-child {
+    margin-bottom: 0;
+}
+
+.bxtr-popup__combined {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.bxtr-popup__combined li {
+    margin-bottom: 8px;
+}
+
+.bxtr-popup__combined li:last-child {
+    margin-bottom: 0;
+}
+
+.bxtr-popup__type,
+.bxtr-popup__title {
+    display: block;
+    margin-top: -2px;
+    margin-bottom: 6px;
+    color: #646970;
+    font-size: 12px;
+}
