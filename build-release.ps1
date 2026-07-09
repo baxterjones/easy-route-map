@@ -1,5 +1,5 @@
 $Plugin = "baxtersweb-maps"
-$Version = "1.0.7"
+$Version = "1.0.6"
 
 $Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Dist = Join-Path $Root "dist"
