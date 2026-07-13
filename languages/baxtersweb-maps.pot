@@ -1,601 +1,983 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Baxtersweb Maps 1.0.6\n"
-"Report-Msgid-Bugs-To: https://baxtersweb.com/plugin/baxtersweb-maps/\n"
-"POT-Creation-Date: 2026-07-06 00:00+0000\n"
+"Project-Id-Version: Baxtersweb Maps 1.1.3\n"
+"Report-Msgid-Bugs-To: https://baxtersweb.com/baxtersweb-maps-docs/\n"
+"POT-Creation-Date: 2026-07-13 15:00+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: baxtersweb-maps\n"
 
-#: includes/class-acf.php:73
-msgid "Advanced Custom Fields is not active."
+#: templates/admin-page.php:88
+msgid "A clean starting point for a new map setup."
 msgstr ""
 
-#: includes/class-acf.php:77
-msgid "ACF OpenStreetMap Field is not active."
+#: includes/class-acf.php:477
+msgid "Accommodation / Building"
 msgstr ""
 
-#: includes/class-acf.php:81
-msgid "The required ACF field update functions are not available."
-msgstr ""
-
-#: includes/class-acf.php:105
-msgid "Baxtersweb Maps Fields"
-msgstr ""
-
-#: includes/class-acf.php:115
-msgid "Route and point-of-interest fields created by Baxtersweb Maps."
-msgstr ""
-
-#: includes/class-acf.php:131
-msgid "The ACF field group could not be created or updated."
-msgstr ""
-
-#: includes/class-acf.php:136
-msgid "Map Markers"
-msgstr ""
-
-#: includes/class-acf.php:136
-msgid "Add one row for each route stop. Drag rows to control the route order."
-msgstr ""
-
-#: includes/class-acf.php:136
-msgid "Add Route Point"
-msgstr ""
-
-#: includes/class-acf.php:137
-msgid "Point Title"
-msgstr ""
-
-#: includes/class-acf.php:137
-msgid "Optional title for this route stop."
-msgstr ""
-
-#: includes/class-acf.php:138
-msgid "Point Description"
-msgstr ""
-
-#: includes/class-acf.php:138
-msgid "Optional popup text for this route stop."
-msgstr ""
-
-#: includes/class-acf.php:139
-msgid "Marker Coordinates"
-msgstr ""
-
-#: includes/class-acf.php:139
-msgid "Drop one marker for this route stop. Baxtersweb Maps needs Raw data, not Leaflet JS or iframe output."
-msgstr ""
-
-#: includes/class-acf.php:143
-msgid "Points of Interest"
-msgstr ""
-
-#: includes/class-acf.php:143
-msgid "Add optional extra markers. These appear on the map but do not affect the route line."
-msgstr ""
-
-#: includes/class-acf.php:143
-msgid "Add Point of Interest"
-msgstr ""
-
-#: includes/class-acf.php:144
-msgid "POI Title"
-msgstr ""
-
-#: includes/class-acf.php:144
-msgid "Optional title for this point of interest."
-msgstr ""
-
-#: includes/class-acf.php:145
-msgid "POI Type"
-msgstr ""
-
-#: includes/class-acf.php:145
-msgid "Optional type such as sun, warning, beach, star, heart, ski, camp, fuel, ferry, parking, or cash."
-msgstr ""
-
-#: includes/class-acf.php:146
-msgid "POI Description"
-msgstr ""
-
-#: includes/class-acf.php:146
-msgid "Optional popup text for this point of interest."
-msgstr ""
-
-#: includes/class-acf.php:147
-msgid "POI Map"
-msgstr ""
-
-#: includes/class-acf.php:147
-msgid "Drop one marker for this point of interest."
-msgstr ""
-
-#: includes/class-acf.php:288
-msgid "Advanced Custom Fields is not active. Install and activate ACF, then set up the Baxtersweb Maps fields."
-msgstr ""
-
-#: includes/class-acf.php:293
-msgid "ACF OpenStreetMap Field is not active. Install and activate the ACF OpenStreetMap Field plugin."
-msgstr ""
-
-#: includes/class-acf.php:300
-msgid "Only one map marker was found. The marker can display, but a route line needs at least two map markers."
-msgstr ""
-
-#: includes/class-acf.php:316
-msgid "Map markers field not found. Expected ACF repeater field name: %s."
-msgstr ""
-
-#: includes/class-acf.php:371
-msgid "One or more OpenStreetMap fields may not be set to Return Format: Raw data. Baxtersweb Maps cannot read Leaflet JS or iframe output."
-msgstr ""
-
-#: includes/class-acf.php:375
-msgid "Route rows were found, but no valid coordinates could be read. Check that each Marker Coordinates field contains one saved marker."
-msgstr ""
-
-#: includes/class-admin.php:20
-msgid "Baxtersweb Maps"
-msgstr ""
-
-#: includes/class-admin.php:143
-msgid "Baxtersweb Maps settings saved."
-msgstr ""
-
-#: includes/class-admin.php:176
-msgid "Baxtersweb Maps ACF fields are ready. Existing generated fields were updated in place where possible."
-msgstr ""
-
-#: includes/class-plugin.php:66
-msgid "Settings"
-msgstr ""
-
-#: includes/class-plugin.php:151
-msgid "Copy"
-msgstr ""
-
-#: includes/class-plugin.php:152
-msgid "Copied"
-msgstr ""
-
-#: includes/class-plugin.php:153
-msgid "Point of Interest"
-msgstr ""
-
-#: includes/class-plugin.php:154
-msgid "Example extra marker."
-msgstr ""
-
-#: includes/class-plugin.php:155
-msgid "Stop A"
-msgstr ""
-
-#: includes/class-plugin.php:156
-msgid "Stop B"
-msgstr ""
-
-#: includes/class-plugin.php:157
-msgid "Example route stop."
-msgstr ""
-
-#: templates/admin-page.php:7
-msgid "Create dynamic OpenStreetMap route displays from ACF map markers and optional points of interest saved on posts, pages, or custom post type entries."
-msgstr ""
-
-#: templates/admin-page.php:11
-msgid "Baxtersweb Maps links"
-msgstr ""
-
-#: templates/admin-page.php:12
-msgid "Docs"
-msgstr ""
-
-#: templates/admin-page.php:13
-msgid "Demo"
-msgstr ""
-
-#: templates/admin-page.php:14
-msgid "Plugin page"
-msgstr ""
-
-#: templates/admin-page.php:16
-msgid "Version %s"
-msgstr ""
-
-#: templates/admin-page.php:27
-msgid "Requirements"
-msgstr ""
-
-#: templates/admin-page.php:31
-msgid "Advanced Custom Fields"
-msgstr ""
-
-#: templates/admin-page.php:35
+#: templates/admin-page.php:62
 msgid "ACF OpenStreetMap Field"
 msgstr ""
 
-#: templates/admin-page.php:39
-msgid "Install and activate the missing plugins first. Baxtersweb Maps currently uses ACF fields for map marker editing."
+#: includes/class-acf.php:123
+msgid "ACF OpenStreetMap Field is not active."
 msgstr ""
 
-#: templates/admin-page.php:41
-msgid "Requirements are active. You can create the recommended ACF fields automatically."
+#: includes/class-acf.php:385
+msgid "ACF OpenStreetMap Field is not active. Install and activate the ACF OpenStreetMap Field plugin."
 msgstr ""
 
-#: templates/admin-page.php:47
-msgid "1. Setup fields"
-msgstr ""
-
-#: templates/admin-page.php:48
-msgid "Create the recommended ACF field group instead of manually setting up route and point-of-interest repeaters."
-msgstr ""
-
-#: templates/admin-page.php:50
-msgid "This will create or update the recommended Baxtersweb Maps ACF fields. Existing generated fields may be updated, but custom fields are not deleted. Continue?"
+#: templates/admin-page.php:57
+msgid "ACF Pro"
 msgstr ""
 
 #: templates/admin-page.php:54
-msgid "Show route fields on:"
+msgid "Action"
+msgstr ""
+
+#: templates/admin-page.php:161 templates/admin-page.php:58 templates/admin-page.php:63
+msgid "Active"
+msgstr ""
+
+#: includes/class-routing.php:98
+msgid "Add an openrouteservice API key to calculate a road-following route."
 msgstr ""
 
 #: templates/admin-page.php:69
-msgid "Optional fields"
-msgstr ""
-
-#: templates/admin-page.php:72
-msgid "Also create or update Points of Interest fields"
-msgstr ""
-
-#: templates/admin-page.php:74
-msgid "Leave this unchecked if you only need route stops. If POI fields already exist, leaving this unchecked will not delete them."
-msgstr ""
-
-#: templates/admin-page.php:76
-msgid "Update Baxtersweb Maps ACF fields"
-msgstr ""
-
-#: templates/admin-page.php:76
-msgid "Set up ACF fields for me"
-msgstr ""
-
-#: templates/admin-page.php:80
-msgid "The Baxtersweb Maps ACF field group already exists. Use the update button if you need to add the newer POI fields to an older installation."
-msgstr ""
-
-#: templates/admin-page.php:85
-msgid "2. Add map markers"
-msgstr ""
-
-#: templates/admin-page.php:86
-msgid "Edit a selected post type and look for the <strong>Map Markers</strong> field group."
-msgstr ""
-
-#: templates/admin-page.php:88
-msgid "Add one row per map marker."
-msgstr ""
-
-#: templates/admin-page.php:89
-msgid "Drop one marker in the <strong>Marker Coordinates</strong> field."
-msgstr ""
-
-#: templates/admin-page.php:90
-msgid "Drag rows to control the route order."
-msgstr ""
-
-#: templates/admin-page.php:91
-msgid "Optionally add extra markers under <strong>Points of Interest</strong>."
+msgid "Add fields"
 msgstr ""
 
 #: templates/admin-page.php:92
-msgid "Save or update the post."
+msgid "Add fields to an existing group"
 msgstr ""
 
-#: templates/admin-page.php:97
-msgid "3. Display the map"
+#: templates/admin-page.php:123 templates/admin-page.php:81
+msgid "Add map fields"
 msgstr ""
 
-#: templates/admin-page.php:98
-msgid "Add this shortcode to the same post, page, CPT content, or template output:"
+#: includes/class-acf.php:187
+msgid "Add Map Marker"
 msgstr ""
 
-#: templates/admin-page.php:103
-msgid "Developers can target a specific post ID, or turn route/POI layers on or off per output:"
+#: includes/class-acf.php:187
+msgid "Add one row for each map marker. Drag rows to control the route order."
 msgstr ""
 
-#: templates/admin-page.php:108
-msgid "For custom loops, pass the current item ID into the shortcode. In PHP templates, use <code>echo do_shortcode('[bxtr_map id=\"' . get_the_ID() . '\"]');</code>. In Advanced Views Layouts, use <code>[bxtr_map id=\"{{ _layout.object_id }}\"]</code>. The plugin will try to detect the current post automatically, but an explicit ID is the safest method inside loops."
+#: includes/class-acf.php:207
+msgid "Add optional points of interest. These appear on the map but do not affect the route line."
 msgstr ""
 
-#: templates/admin-page.php:124
-msgid "Marker colour"
+#: templates/admin-page.php:123
+msgid "Add or update missing fields"
 msgstr ""
 
-#: templates/admin-page.php:127
-msgid "Use a six-character web hex colour, for example <code>#3d874d</code>."
+#: includes/class-acf.php:207
+msgid "Add POI Marker"
 msgstr ""
 
-#: templates/admin-page.php:131
-msgid "Marker number colour"
+#: templates/admin-page.php:137
+msgid "Add the map fields."
 msgstr ""
 
-#: templates/admin-page.php:134
-msgid "Controls the number text inside route markers. Default is white: <code>#ffffff</code>."
+#: templates/admin-page.php:146
+msgid "Add the map wherever your content needs it."
 msgstr ""
 
-#: templates/admin-page.php:138
-msgid "Route colour"
+#: templates/admin-page.php:44
+msgid "Add useful places with icons, colours and popups."
 msgstr ""
 
-#: templates/admin-page.php:141
-msgid "Use a six-character web hex colour. Default is Leaflet blue: <code>#3388ff</code>."
+#: templates/admin-page.php:62
+msgid "Adds the coordinate picker used inside your ACF fields."
 msgstr ""
 
-#: templates/admin-page.php:145
-msgid "POI marker colour"
+#: includes/class-acf.php:119
+msgid "Advanced Custom Fields Pro is not active."
 msgstr ""
 
-#: templates/admin-page.php:148
-msgid "Controls the supporting point markers. These do not affect the route line."
+#: includes/class-acf.php:380
+msgid "Advanced Custom Fields Pro is not active. Install and activate ACF Pro, then set up the Baxtersweb Maps fields."
 msgstr ""
 
-#: templates/admin-page.php:152
-msgid "POI icon style"
+#: templates/admin-page.php:244
+msgid "Advanced Views can display your existing ACF fields and the map together for each post in a selection or layout."
 msgstr ""
 
-#: templates/admin-page.php:155
-msgid "Clean dots"
+#: templates/admin-page.php:244
+msgid "Advanced Views integration"
 msgstr ""
 
-#: templates/admin-page.php:156
-msgid "Automatic icons from POI type"
+#: includes/class-acf.php:479
+msgid "Airport"
 msgstr ""
 
-#: templates/admin-page.php:158
-msgid "Clean dots are the safest default. Automatic icons use the POI Type field. Type one of these labels to show the matching icon:"
+#: templates/admin-page.php:229
+msgid "Always show markers individually"
 msgstr ""
 
-#: templates/admin-page.php:167
-msgid "Layers"
+#: templates/admin-page.php:133
+msgid "An ordered route with styled POIs. Your own content will use the global appearance settings."
 msgstr ""
 
-#: templates/admin-page.php:171
-msgid "Draw route line between map markers"
+#: includes/class-acf.php:480
+msgid "Attraction / Camera"
 msgstr ""
 
-#: templates/admin-page.php:176
-msgid "Show points of interest layer"
+#: includes/class-admin.php:9 templates/admin-page.php:21
+msgid "Baxtersweb Maps"
 msgstr ""
 
-#: templates/admin-page.php:178
-msgid "Both can still be overridden on a shortcode using <code>route=\"no\"</code> or <code>poi=\"no\"</code>."
-msgstr ""
-
-#: templates/admin-page.php:182
-msgid "Map style"
-msgstr ""
-
-#: templates/admin-page.php:185
-msgid "OpenStreetMap Standard"
-msgstr ""
-
-#: templates/admin-page.php:186
-msgid "Humanitarian"
-msgstr ""
-
-#: templates/admin-page.php:187
-msgid "OpenTopoMap"
-msgstr ""
-
-#: templates/admin-page.php:189
-msgid "These are public OpenStreetMap-compatible tile styles. Keep this simple for now; custom branded tile providers can come later."
-msgstr ""
-
-#: templates/admin-page.php:193
-msgid "Map height"
-msgstr ""
-
-#: templates/admin-page.php:196
-msgid "Enter a fixed CSS height using <code>px</code>, <code>vh</code>, <code>rem</code>, or <code>em</code>. Avoid percentage heights because Leaflet maps often cannot calculate them unless the parent has a fixed height."
-msgstr ""
-
-#: templates/admin-page.php:200
-msgid "Border radius"
-msgstr ""
-
-#: templates/admin-page.php:203
-msgid "Enter any valid CSS border-radius value. Examples: <code>12px</code>, <code>1rem</code>, <code>50%</code>."
-msgstr ""
-
-#: templates/admin-page.php:207
-msgid "Marker numbering"
-msgstr ""
-
-#: templates/admin-page.php:211
-msgid "Stop"
-msgstr ""
-
-#: templates/admin-page.php:212
-msgid "Point"
-msgstr ""
-
-#: templates/admin-page.php:213
-msgid "Alphabetical markers: A, B, C"
-msgstr ""
-
-#: templates/admin-page.php:214
-msgid "Location"
-msgstr ""
-
-#: templates/admin-page.php:215
-msgid "Custom"
-msgstr ""
-
-#: templates/admin-page.php:220
-msgid "Controls the popup label before the route number, for example <code>Alphabetical markers: A, B, C 1</code>, <code>Stop 1</code>, or <code>Location 1</code>."
-msgstr ""
-
-#: templates/admin-page.php:224
-msgid "Custom marker label"
-msgstr ""
-
-#: templates/admin-page.php:226
-msgid "Stage"
-msgstr ""
-
-#: templates/admin-page.php:227
-msgid "Numbered markers: 1, 2, 3"
-msgstr ""
-
-#: templates/admin-page.php:231
-msgid "Plugin data on uninstall"
-msgstr ""
-
-#: templates/admin-page.php:236
-msgid "Keep all data"
-msgstr ""
-
-#: templates/admin-page.php:236
-msgid "Recommended. Preserves map markers, generated ACF fields, and settings if the plugin is deleted."
-msgstr ""
-
-#: templates/admin-page.php:240
-msgid "Remove plugin data"
-msgstr ""
-
-#: templates/admin-page.php:240
-msgid "Deletes Baxtersweb Maps settings and the generated ACF field group on uninstall. Existing post meta is preserved for safety."
-msgstr ""
-
-#: templates/admin-page.php:250
-msgid "Style preview"
-msgstr ""
-
-#: templates/admin-page.php:251
-msgid "Change the fields, then save settings to apply them to real maps. This preview uses fake route and POI points."
-msgstr ""
-
-#: templates/admin-page.php:259
-msgid "Common style overrides"
-msgstr ""
-
-#: templates/admin-page.php:260
-msgid "Style the POI marker with <code>.bxtr-marker__poi</code> to change its size, shape, colour, or shadow."
-msgstr ""
-
-#: templates/admin-page.php:261
-msgid "Style the route marker with <code>.bxtr-marker__pin</code> to adjust the marker shape, rotation, or shadow."
-msgstr ""
-
-#: templates/admin-page.php:262
-msgid "Style the popup content with <code>.bxtr-popup</code> and <code>.bxtr-popup__description</code>."
-msgstr ""
-
-#: templates/admin-page.php:263
-msgid "Style the map container with <code>.bxtr-map</code>, or use the Map height and Border radius settings above."
-msgstr ""
-
-#: templates/admin-page.php:268
-msgid "Save Settings"
-msgstr ""
-
-#: templates/admin-page.php:275
-msgid "Field names used by this plugin"
-msgstr ""
-
-#: templates/admin-page.php:276
-msgid "If you prefer to create fields manually, use these exact field names. The OpenStreetMap field must use <strong>Return Format: Raw data</strong> and should allow <strong>maximum 1 marker</strong> per map marker."
-msgstr ""
-
-#: templates/admin-page.php:278
-msgid "Field"
-msgstr ""
-
-#: templates/admin-page.php:278
-msgid "Type"
-msgstr ""
-
-#: templates/admin-page.php:278
-msgid "Notes"
-msgstr ""
-
-#: templates/admin-page.php:280
-msgid "Repeater"
-msgstr ""
-
-#: templates/admin-page.php:280
-msgid "Each row is treated as one map marker."
-msgstr ""
-
-#: templates/admin-page.php:281
-msgid "Text"
-msgstr ""
-
-#: templates/admin-page.php:281
-msgid "Optional title for the map marker."
-msgstr ""
-
-#: templates/admin-page.php:282
-msgid "OpenStreetMap"
-msgstr ""
-
-#: templates/admin-page.php:282
-msgid "Required. Labelled Marker Coordinates. Return Format must be Raw data. Max markers should be 1."
-msgstr ""
-
-#: templates/admin-page.php:283
-msgid "WYSIWYG / Textarea / Text"
-msgstr ""
-
-#: templates/admin-page.php:283
-msgid "Optional. Displayed inside the marker popup."
-msgstr ""
-
-#: templates/admin-page.php:284
-msgid "Optional supporting markers. These do not change the route line."
-msgstr ""
-
-#: templates/admin-page.php:285
-msgid "Optional title for the point of interest."
-msgstr ""
-
-#: templates/admin-page.php:286
-msgid "Optional label such as sun, warning, beach, star, heart, ski, camp, fuel, ferry, parking, or cash."
-msgstr ""
-
-#: templates/admin-page.php:287
-msgid "Required for each POI row. Return Format must be Raw data. Max markers should be 1."
-msgstr ""
-
-#: templates/admin-page.php:288
-msgid "Optional. Displayed inside the POI popup."
-msgstr ""
-
-#: templates/admin-page.php:293
-msgid "Test checklist"
-msgstr ""
-
-#: templates/admin-page.php:295
-msgid "ACF is active."
-msgstr ""
-
-#: templates/admin-page.php:296
-msgid "ACF OpenStreetMap Field is active."
-msgstr ""
-
-#: templates/admin-page.php:297
-msgid "The field group has been created or updated."
-msgstr ""
-
-#: templates/admin-page.php:298
-msgid "Map markers have been saved on a post."
-msgstr ""
-
-#: templates/admin-page.php:299
-msgid "The shortcode has been added to the content or template."
+#: includes/class-acf.php:157 includes/class-acf.php:222
+msgid "Baxtersweb Maps Fields"
 msgstr ""
 
 #: templates/map.php:6
 msgid "Baxtersweb Maps found no map markers or points of interest."
+msgstr ""
+
+#: includes/class-admin.php:128
+msgid "Baxtersweb Maps settings saved."
+msgstr ""
+
+#: includes/class-acf.php:481
+msgid "Beach / Leisure"
+msgstr ""
+
+#: templates/admin-page.php:92
+msgid "Best when your pages, posts or CPTs already have ACF content."
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Border radius"
+msgstr ""
+
+#: templates/admin-page.php:157
+msgid "Build archive cards, custom layouts and content sections from your existing ACF fields, then include the map for each current post."
+msgstr ""
+
+#: templates/admin-page.php:22
+msgid "Build ordered route maps and interactive points of interest from ACF content. Add the map fields to new or existing content, then display the result anywhere with a shortcode."
+msgstr ""
+
+#: includes/class-acf.php:324
+msgid "Built-in icon"
+msgstr ""
+
+#: templates/admin-page.php:225
+msgid "Built-in WordPress icons"
+msgstr ""
+
+#: includes/class-acf.php:483
+msgid "Cash / Money"
+msgstr ""
+
+#: includes/class-acf.php:482
+msgid "Check point"
+msgstr ""
+
+#: templates/admin-page.php:220
+msgid "Choose a contrasting colour for route letters or numbers."
+msgstr ""
+
+#: includes/class-acf.php:138
+msgid "Choose an existing ACF field group before adding the map fields."
+msgstr ""
+
+#: templates/admin-page.php:14
+msgid "Choose colour"
+msgstr ""
+
+#: templates/admin-page.php:225
+msgid "Choose one icon system for the site instead of making editors decide between systems on every POI."
+msgstr ""
+
+#: includes/class-acf.php:200
+msgid "Choose the built-in icon for this point of interest."
+msgstr ""
+
+#: templates/admin-page.php:97
+msgid "Choose the existing field group"
+msgstr ""
+
+#: templates/admin-page.php:82
+msgid "Choose where Baxtersweb Maps should add its maintained route and POI fields. Existing fields in the selected group are left in place, and only the Baxtersweb Maps fields are created or updated."
+msgstr ""
+
+#: templates/admin-page.php:67
+msgid "Choose where the route and POI fields should live."
+msgstr ""
+
+#: includes/class-acf.php:478
+msgid "Coffee"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Colour and marker changes update here before you save."
+msgstr ""
+
+#: templates/admin-page.php:245
+msgid "Common map variations"
+msgstr ""
+
+#: templates/admin-page.php:73
+msgid "Connected"
+msgstr ""
+
+#: includes/class-admin.php:48 templates/admin-page.php:185
+msgid "Connected — API key verified."
+msgstr ""
+
+#: templates/admin-page.php:169
+msgid "Connecting an API is optional."
+msgstr ""
+
+#: templates/admin-page.php:188
+msgid "Connection failed."
+msgstr ""
+
+#: includes/class-plugin.php:177
+msgid "Copied"
+msgstr ""
+
+#: includes/class-plugin.php:176
+msgid "Copy"
+msgstr ""
+
+#: templates/admin-page.php:88
+msgid "Create a new field group"
+msgstr ""
+
+#: templates/admin-page.php:136
+msgid "Create your first map"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "CSS classes"
+msgstr ""
+
+#: templates/admin-page.php:67
+msgid "Currently placed in “%s”."
+msgstr ""
+
+#: templates/admin-page.php:242
+msgid "Data on uninstall"
+msgstr ""
+
+#: templates/admin-page.php:228
+msgid "Default background"
+msgstr ""
+
+#: templates/admin-page.php:226
+msgid "Default built-in icon"
+msgstr ""
+
+#: templates/admin-page.php:227
+msgid "Default theme icon class"
+msgstr ""
+
+#: templates/admin-page.php:27
+msgid "Demo"
+msgstr ""
+
+#: templates/admin-page.php:241
+msgid "Display maps"
+msgstr ""
+
+#: templates/admin-page.php:137
+msgid "Display the map with [bxtr_map]."
+msgstr ""
+
+#: templates/admin-page.php:156
+msgid "Display your ACF content and maps together with Advanced Views."
+msgstr ""
+
+#: templates/admin-page.php:145
+msgid "Display your map"
+msgstr ""
+
+#: templates/admin-page.php:26
+msgid "Docs"
+msgstr ""
+
+#: includes/class-acf.php:190
+msgid "Drop one marker for this map marker. Baxtersweb Maps needs Raw data, not Leaflet JS or iframe output."
+msgstr ""
+
+#: includes/class-acf.php:206
+msgid "Drop one marker for this point of interest."
+msgstr ""
+
+#: templates/admin-page.php:168
+msgid "Enable road-following routes"
+msgstr ""
+
+#: templates/admin-page.php:74
+msgid "Enable routing"
+msgstr ""
+
+#: includes/class-admin.php:33
+msgid "Enter an openrouteservice API key before testing the connection."
+msgstr ""
+
+#: templates/admin-page.php:137
+msgid "Enter route markers and POIs in your content."
+msgstr ""
+
+#: includes/class-acf.php:479
+msgid "Event / Ticket"
+msgstr ""
+
+#: templates/admin-page.php:52
+msgid "Everything required to create and display maps is shown here. Road-following routing and Advanced Views are optional."
+msgstr ""
+
+#: templates/admin-page.php:132
+msgid "Example map"
+msgstr ""
+
+#: includes/class-plugin.php:183
+msgid "Example Map Marker"
+msgstr ""
+
+#: includes/class-plugin.php:182
+msgid "Example route marker popup content."
+msgstr ""
+
+#: includes/class-plugin.php:179
+msgid "Example supporting point."
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Examples: 0px, 12px or 1rem."
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Examples: 500px, 60vh or 30rem."
+msgstr ""
+
+#: templates/admin-page.php:162
+msgid "Explore Advanced Views"
+msgstr ""
+
+#: templates/admin-page.php:210
+msgid "External service disclosure"
+msgstr ""
+
+#: includes/class-acf.php:483
+msgid "Featured"
+msgstr ""
+
+#: templates/admin-page.php:242
+msgid "Fields added to another ACF field group are not deleted with that group. This preference applies when the plugin itself is deleted from WordPress."
+msgstr ""
+
+#: templates/admin-page.php:116
+msgid "Fields to include"
+msgstr ""
+
+#: templates/admin-page.php:45
+msgid "Fits your content"
+msgstr ""
+
+#: includes/class-acf.php:478
+msgid "Food"
+msgstr ""
+
+#: templates/admin-page.php:202
+msgid "Get a free API key"
+msgstr ""
+
+#: templates/admin-page.php:229
+msgid "Group nearby markers and spread them on click"
+msgstr ""
+
+#: templates/admin-page.php:229
+msgid "Grouping keeps maps readable when several POIs are close together at the current zoom level."
+msgstr ""
+
+#: templates/admin-page.php:36
+msgid "Help & Data"
+msgstr ""
+
+#: templates/admin-page.php:224
+msgid "Hide points of interest globally"
+msgstr ""
+
+#: includes/class-plugin.php:178
+msgid "Hotel"
+msgstr ""
+
+#: templates/admin-page.php:228
+msgid "Individual POIs may override this with their own hex colour."
+msgstr ""
+
+#: includes/class-acf.php:480
+msgid "Information"
+msgstr ""
+
+#: templates/admin-page.php:241
+msgid "Inside a PHP loop:"
+msgstr ""
+
+#: templates/admin-page.php:44
+msgid "Interactive POIs"
+msgstr ""
+
+#: templates/admin-page.php:242
+msgid "Keep plugin settings and generated fields"
+msgstr ""
+
+#: templates/admin-page.php:196
+msgid "Last tested: %s"
+msgstr ""
+
+#: templates/admin-page.php:124
+msgid "Last updated: %s"
+msgstr ""
+
+#: templates/admin-page.php:218
+msgid "Letters: A, B, C"
+msgstr ""
+
+#: includes/class-acf.php:477
+msgid "Location"
+msgstr ""
+
+#: templates/admin-page.php:217
+msgid "Make route markers easy to follow"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Map container"
+msgstr ""
+
+#: templates/admin-page.php:67
+msgid "Map fields"
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Map height"
+msgstr ""
+
+#: templates/admin-page.php:245
+msgid "Map in a post loop"
+msgstr ""
+
+#: includes/class-acf.php:167
+msgid "Map marker and point-of-interest fields created by Baxtersweb Maps."
+msgstr ""
+
+#: includes/class-acf.php:468
+msgid "Map marker rows were found, but no valid coordinates could be read. Check that each Marker Coordinates field contains one saved marker."
+msgstr ""
+
+#: includes/class-acf.php:187
+msgid "Map Markers"
+msgstr ""
+
+#: includes/class-acf.php:409
+msgid "Map markers field not found. Expected ACF repeater field name: %s."
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Maps use the standard OpenStreetMap tile layer. These settings control how the map fits into your page design."
+msgstr ""
+
+#: includes/class-plugin.php:124
+msgid "Marker"
+msgstr ""
+
+#: includes/class-plugin.php:180
+msgid "Marker A"
+msgstr ""
+
+#: includes/class-plugin.php:181
+msgid "Marker B"
+msgstr ""
+
+#: templates/admin-page.php:219
+msgid "Marker background"
+msgstr ""
+
+#: includes/class-acf.php:204
+msgid "Marker Background Colour"
+msgstr ""
+
+#: includes/class-acf.php:190
+msgid "Marker Coordinates"
+msgstr ""
+
+#: includes/class-acf.php:189
+msgid "Marker Description"
+msgstr ""
+
+#: templates/admin-page.php:218
+msgid "Marker sequence"
+msgstr ""
+
+#: templates/admin-page.php:220
+msgid "Marker text"
+msgstr ""
+
+#: includes/class-acf.php:188
+msgid "Marker Title"
+msgstr ""
+
+#: templates/admin-page.php:36
+msgid "Markers & POIs"
+msgstr ""
+
+#: includes/class-acf.php:480
+msgid "Medical / Heart"
+msgstr ""
+
+#: includes/class-acf.php:482
+msgid "Meeting point"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Nearby POI group"
+msgstr ""
+
+#: templates/admin-page.php:229
+msgid "Nearby POIs"
+msgstr ""
+
+#: includes/class-routing.php:177
+msgid "No usable road route was returned for these markers."
+msgstr ""
+
+#: templates/admin-page.php:68
+msgid "Not added"
+msgstr ""
+
+#: templates/admin-page.php:182
+msgid "Not tested"
+msgstr ""
+
+#: templates/admin-page.php:218
+msgid "Numbers: 1, 2, 3"
+msgstr ""
+
+#: includes/class-acf.php:464
+msgid "One or more OpenStreetMap fields may not be set to Return Format: Raw data. Baxtersweb Maps cannot read Leaflet JS or iframe output."
+msgstr ""
+
+#: includes/class-acf.php:392
+msgid "Only one map marker was found. The marker can display, but a route line needs at least two map markers."
+msgstr ""
+
+#: templates/admin-page.php:174
+msgid "openrouteservice API key"
+msgstr ""
+
+#: templates/admin-page.php:161 templates/admin-page.php:73
+msgid "Optional"
+msgstr ""
+
+#: includes/class-acf.php:196
+msgid "Optional category text shown in the popup."
+msgstr ""
+
+#: includes/class-acf.php:204
+msgid "Optional hex colour such as #3d874d. Leave empty to use the global POI colour."
+msgstr ""
+
+#: templates/admin-page.php:119
+msgid "Optional icons, colours, popup content and coordinates."
+msgstr ""
+
+#: templates/admin-page.php:155
+msgid "Optional integration"
+msgstr ""
+
+#: includes/class-acf.php:202
+msgid "Optional override. Leave empty to use the default theme icon class from Baxtersweb Maps settings."
+msgstr ""
+
+#: includes/class-acf.php:189
+msgid "Optional popup text for this map marker."
+msgstr ""
+
+#: includes/class-acf.php:205
+msgid "Optional popup text for this point of interest."
+msgstr ""
+
+#: includes/class-acf.php:188
+msgid "Optional title for this map marker."
+msgstr ""
+
+#: includes/class-acf.php:195
+msgid "Optional title for this point of interest."
+msgstr ""
+
+#: templates/admin-page.php:72
+msgid "Optional. Without an API key, markers are connected with straight lines."
+msgstr ""
+
+#: templates/admin-page.php:43
+msgid "Ordered routes"
+msgstr ""
+
+#: templates/admin-page.php:36
+msgid "Overview"
+msgstr ""
+
+#: includes/class-acf.php:478
+msgid "Parking / Car"
+msgstr ""
+
+#: templates/admin-page.php:241
+msgid "Pass a specific post ID:"
+msgstr ""
+
+#: templates/admin-page.php:244
+msgid "Place a map inside archive cards and custom ACF layouts."
+msgstr ""
+
+#: templates/admin-page.php:225
+msgid "Plain coloured marker"
+msgstr ""
+
+#: includes/class-acf.php:324
+msgid "Plain marker"
+msgstr ""
+
+#: templates/admin-page.php:54
+msgid "Plugin or feature"
+msgstr ""
+
+#: includes/class-acf.php:206
+msgid "POI Coordinates"
+msgstr ""
+
+#: includes/class-acf.php:205
+msgid "POI Description"
+msgstr ""
+
+#: includes/class-acf.php:200
+msgid "POI Icon"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "POI marker"
+msgstr ""
+
+#: templates/admin-page.php:225
+msgid "POI marker style"
+msgstr ""
+
+#: includes/class-acf.php:207
+msgid "POI Markers"
+msgstr ""
+
+#: includes/class-acf.php:195
+msgid "POI Title"
+msgstr ""
+
+#: includes/class-acf.php:196
+msgid "POI Type"
+msgstr ""
+
+#: includes/class-plugin.php:125 templates/map.php:29
+msgid "Point of Interest"
+msgstr ""
+
+#: templates/admin-page.php:119
+msgid "Points of interest"
+msgstr ""
+
+#: templates/admin-page.php:245
+msgid "POIs without a route"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Popup content"
+msgstr ""
+
+#: templates/admin-page.php:57
+msgid "Provides the repeater fields used for route markers and POIs."
+msgstr ""
+
+#: templates/admin-page.php:68
+msgid "Ready"
+msgstr ""
+
+#: templates/admin-page.php:242
+msgid "Remove plugin settings and the generated Baxtersweb Maps field group"
+msgstr ""
+
+#: templates/admin-page.php:58 templates/admin-page.php:63
+msgid "Required"
+msgstr ""
+
+#: templates/admin-page.php:69
+msgid "Review fields"
+msgstr ""
+
+#: templates/admin-page.php:72
+msgid "Road-following routes"
+msgstr ""
+
+#: templates/admin-page.php:206
+msgid "Route colour"
+msgstr ""
+
+#: templates/admin-page.php:205
+msgid "Route display"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Route marker"
+msgstr ""
+
+#: templates/admin-page.php:118
+msgid "Route markers"
+msgstr ""
+
+#: templates/admin-page.php:217
+msgid "Route markers show the order of a journey. Keep their colour and lettering clear against the map."
+msgstr ""
+
+#: templates/admin-page.php:245
+msgid "Route without POIs"
+msgstr ""
+
+#: templates/admin-page.php:36
+msgid "Routing"
+msgstr ""
+
+#: includes/class-admin.php:51
+msgid "Routing connected successfully. %d existing map was updated."
+msgid_plural "Routing connected successfully. %d existing maps were updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/admin-page.php:74
+msgid "Routing settings"
+msgstr ""
+
+#: templates/admin-page.php:178
+msgid "Save & Test API"
+msgstr ""
+
+#: templates/admin-page.php:233
+msgid "Save marker and map settings"
+msgstr ""
+
+#: templates/admin-page.php:242
+msgid "Save uninstall preference"
+msgstr ""
+
+#: templates/admin-page.php:99
+msgid "Select an ACF field group"
+msgstr ""
+
+#: includes/class-acf.php:483
+msgid "Services"
+msgstr ""
+
+#: templates/admin-page.php:223
+msgid "Set useful POI defaults"
+msgstr ""
+
+#: includes/class-plugin.php:77
+msgid "Settings"
+msgstr ""
+
+#: templates/admin-page.php:51
+msgid "Setup status"
+msgstr ""
+
+#: templates/admin-page.php:232
+msgid "Shape the map container"
+msgstr ""
+
+#: includes/class-acf.php:479
+msgid "Shop"
+msgstr ""
+
+#: templates/admin-page.php:205
+msgid "Show markers only"
+msgstr ""
+
+#: templates/admin-page.php:224
+msgid "Show points of interest"
+msgstr ""
+
+#: templates/admin-page.php:224
+msgid "Show POIs"
+msgstr ""
+
+#: templates/admin-page.php:205
+msgid "Show the route line"
+msgstr ""
+
+#: includes/class-acf.php:481
+msgid "Start / Finish"
+msgstr ""
+
+#: templates/admin-page.php:54
+msgid "Status"
+msgstr ""
+
+#: templates/admin-page.php:235
+msgid "Style preview"
+msgstr ""
+
+#: includes/class-acf.php:181
+msgid "The ACF field group could not be created or updated."
+msgstr ""
+
+#: templates/admin-page.php:227
+msgid "The class must be provided by the active theme or another plugin."
+msgstr ""
+
+#: templates/admin-page.php:202
+msgid "The key is used only when a route is calculated or updated. Visitors viewing a saved route do not use your API quota."
+msgstr ""
+
+#: templates/admin-page.php:219
+msgid "The main colour of every ordered route marker."
+msgstr ""
+
+#: templates/admin-page.php:104
+msgid "The plugin adds its own stable fields to this group. You do not need to rename or map your existing fields."
+msgstr ""
+
+#: includes/class-acf.php:127
+msgid "The required ACF field update functions are not available."
+msgstr ""
+
+#: includes/class-admin.php:142
+msgid "The route and POI fields are ready in “%s”."
+msgstr ""
+
+#: includes/class-admin.php:144
+msgid "The route fields are ready in “%s”. POI fields are not included."
+msgstr ""
+
+#: includes/class-routing.php:163
+msgid "The routing service could not be reached. Check the connection and try again."
+msgstr ""
+
+#: includes/class-routing.php:170
+msgid "The routing service rejected the request."
+msgstr ""
+
+#: includes/class-admin.php:140
+msgid "the selected field group"
+msgstr ""
+
+#: includes/class-acf.php:202
+msgid "Theme Icon Class"
+msgstr ""
+
+#: includes/class-acf.php:324 templates/admin-page.php:225
+msgid "Theme icon class"
+msgstr ""
+
+#: templates/admin-page.php:223
+msgid "These defaults keep the content editor compact. Individual POIs can still choose a built-in icon or colour where that option is enabled."
+msgstr ""
+
+#: includes/class-plugin.php:184
+msgid "This is dummy popup content so you can preview the marker and popup styling."
+msgstr ""
+
+#: templates/admin-page.php:118
+msgid "Title, description and map coordinates in route order."
+msgstr ""
+
+#: templates/admin-page.php:43
+msgid "Turn ACF locations into clear A–B–C route maps."
+msgstr ""
+
+#: templates/admin-page.php:45
+msgid "Use a new field group or add fields to one you already maintain."
+msgstr ""
+
+#: templates/admin-page.php:241
+msgid "Use the current post automatically:"
+msgstr ""
+
+#: templates/admin-page.php:147
+msgid "Use the shortcode on a single page, pass a post ID inside a PHP loop, or place it in an Advanced Views Layout."
+msgstr ""
+
+#: templates/admin-page.php:206
+msgid "Used for both road-following and straight-line routes."
+msgstr ""
+
+#: templates/admin-page.php:226
+msgid "Used whenever a POI does not choose a different built-in icon."
+msgstr ""
+
+#: templates/admin-page.php:205
+msgid "Uses a cached road route when connected, otherwise a dashed straight line."
+msgstr ""
+
+#: templates/admin-page.php:59
+msgid "View ACF Pro"
+msgstr ""
+
+#: templates/admin-page.php:162
+msgid "View Advanced Views"
+msgstr ""
+
+#: templates/admin-page.php:244
+msgid "View Advanced Views on WordPress.org"
+msgstr ""
+
+#: templates/admin-page.php:64
+msgid "View on WordPress.org"
+msgstr ""
+
+#: includes/class-acf.php:481
+msgid "Viewpoint / Globe"
+msgstr ""
+
+#: includes/class-acf.php:482
+msgid "Warning"
+msgstr ""
+
+#: templates/admin-page.php:42
+msgid "What Baxtersweb Maps does"
+msgstr ""
+
+#: templates/admin-page.php:210
+msgid "When a road route is calculated, its coordinates are sent from your WordPress server to openrouteservice solely to return the requested route geometry."
+msgstr ""
+
+#: templates/admin-page.php:108
+msgid "Where should the new field group appear?"
+msgstr ""
+
+#: templates/admin-page.php:169
+msgid "Without one, Baxtersweb Maps joins route markers with a dashed straight line. Add a free openrouteservice key when you want routes calculated along roads."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "API key removed. Existing saved road routes are retained. New or changed routes will use straight fallback lines until another valid key is connected."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "No API key is saved. Existing saved routes remain available."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "How saved routes behave"
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Removing the API key does not remove road geometry that has already been calculated and saved."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "When a valid key is added, existing maps without saved road geometry are calculated automatically."
+msgstr ""
+
+#: templates/admin-page.php
+msgid "Without a valid key, new or changed routes use dashed straight fallback lines until routing is available again."
 msgstr ""

@@ -1,386 +1,101 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const mapEls = document.querySelectorAll('.bxtr-map');
+(function () {
+    'use strict';
+    if (typeof L === 'undefined') return;
 
-    if (!mapEls.length) {
-        return;
-    }
+    const tileLayer = { url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', options: { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' } };
 
-    if (typeof L === 'undefined') {
-        console.error('Baxtersweb Maps: Leaflet is not loaded.');
-        return;
-    }
-
-    const tileLayers = {
-        osm: {
-            url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            options: { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors' }
-        },
-        hot: {
-            url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
-            options: { maxZoom: 19, attribution: '&copy; OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team' }
-        },
-        topo: {
-            url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-            options: { maxZoom: 17, attribution: '&copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap' }
-        }
-    };
-
-    function safeJson(value, fallback) {
-        try {
-            return JSON.parse(value || '[]');
-        } catch (error) {
-            console.error('Baxtersweb Maps: invalid map point data.', error);
-            return fallback;
-        }
-    }
-
-    function isHex(value, fallback) {
-        return /^#[0-9a-f]{6}$/i.test(value || '') ? value : fallback;
-    }
-
-    function escapeHtml(value) {
-        return String(value || '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
-    }
-
-    function normalisePoints(items, kind) {
-        const points = [];
-
-        items.forEach(function (item, index) {
-            const lat = parseFloat(item.lat);
-            const lng = parseFloat(item.lng);
-
-            if (Number.isNaN(lat) || Number.isNaN(lng)) {
-                return;
-            }
-
-            points.push({
-                lat: lat,
-                lng: lng,
-                title: item.title || '',
-                description: item.description || '',
-                type: item.type || '',
-                zoom: parseInt(item.zoom || '10', 10),
-                number: item.number || index + 1,
-                kind: kind
-            });
-        });
-
-        return points;
-    }
-
-    function coordinateKey(point) {
-        return point.lat.toFixed(6) + ',' + point.lng.toFixed(6);
-    }
-
-    function uniqueCoordinateCount(points) {
-        const keys = {};
-
-        points.forEach(function (point) {
-            keys[coordinateKey(point)] = true;
-        });
-
-        return Object.keys(keys).length;
-    }
-
-    function uniqueRoutePoints(points) {
-        const seen = {};
-        const unique = [];
-
-        points.forEach(function (point) {
-            const key = coordinateKey(point);
-
-            if (seen[key]) {
-                return;
-            }
-
-            seen[key] = true;
-            unique.push(point);
-        });
-
-        return unique;
-    }
-
+    function json(value, fallback) { try { return JSON.parse(value || ''); } catch (e) { return fallback; } }
+    function esc(value) { const d=document.createElement('div'); d.textContent=String(value||''); return d.innerHTML; }
     function routeLabel(index, sequence) {
-        if (sequence === 'numeric') {
-            return String(index + 1);
-        }
-        let label = '';
-        let value = index + 1;
-
-        while (value > 0) {
-            value--;
-            label = String.fromCharCode(65 + (value % 26)) + label;
-            value = Math.floor(value / 26);
-        }
-
-        return label;
+        if (sequence === 'numeric') return String(index + 1);
+        let label='', value=index+1; while(value>0){value--;label=String.fromCharCode(65+(value%26))+label;value=Math.floor(value/26);} return label;
+    }
+    function normalise(items, kind) {
+        return (Array.isArray(items)?items:[]).map(function(p,i){return {
+            lat:parseFloat(p.lat), lng:parseFloat(p.lng), zoom:parseInt(p.zoom||10,10), title:p.title||'', description:p.description||'', type:p.type||'', kind:kind,
+            markerStyle:p.markerStyle||'builtin', builtinIcon:p.builtinIcon||'location-alt', themeIconClass:p.themeIconClass||'', color:p.color||'', index:i
+        };}).filter(function(p){return Number.isFinite(p.lat)&&Number.isFinite(p.lng);});
+    }
+    function routeIcon(label) {
+        return L.divIcon({className:'bxtr-marker bxtr-marker--route',html:'<span class="bxtr-marker__route"><span class="bxtr-marker__number">'+esc(label)+'</span></span>',iconSize:[30,40],iconAnchor:[15,40],popupAnchor:[0,-36]});
+    }
+    function poiIcon(point, defaultColor) {
+        const color=/^#[0-9a-f]{6}$/i.test(point.color)?point.color:defaultColor;
+        let inner='';
+        if(point.markerStyle==='theme' && point.themeIconClass) inner='<i class="'+esc(point.themeIconClass)+'" aria-hidden="true"></i>';
+        else if(point.markerStyle!=='plain') inner='<span class="dashicons dashicons-'+esc(point.builtinIcon)+'" aria-hidden="true"></span>';
+        return L.divIcon({className:'bxtr-marker bxtr-marker--poi',html:'<span class="bxtr-marker__poi-icon" style="background-color:'+esc(color)+'">'+inner+'</span>',iconSize:[34,34],iconAnchor:[17,17],popupAnchor:[0,-18]});
+    }
+    function clusterIcon(count) {
+        return L.divIcon({className:'bxtr-marker bxtr-marker--cluster',html:'<span class="bxtr-marker__cluster">'+count+'</span>',iconSize:[38,38],iconAnchor:[19,19]});
+    }
+    function popup(point, label) {
+        const markerText=(window.BXTRMapsFrontend&&BXTRMapsFrontend.marker)||'Marker';
+        const poiText=(window.BXTRMapsFrontend&&BXTRMapsFrontend.pointOfInterest)||'Point of Interest';
+        let heading=point.title || (point.kind==='route'?markerText+' '+label:(point.type||poiText));
+        let html='<div class="bxtr-popup"><strong>'+esc(heading)+'</strong>';
+        if(point.kind==='poi' && point.type && point.title) html+='<span class="bxtr-popup__type">'+esc(point.type)+'</span>';
+        if(point.description) html+='<div class="bxtr-popup__description">'+point.description+'</div>';
+        return html+'</div>';
     }
 
-    function labelRange(points) {
-        const labels = points.map(function (point) {
-            return point.label;
-        }).filter(Boolean);
+    function initMap(el) {
+        const sequence=el.dataset.markerSequence==='numeric'?'numeric':'alphabetic';
+        const stops=normalise(json(el.dataset.stops,[]),'route');
+        const pois=normalise(json(el.dataset.pois,[]),'poi');
+        if(!stops.length&&!pois.length) return;
+        stops.forEach(function(p,i){p.label=routeLabel(i,sequence);});
+        const all=stops.concat(pois), first=all[0];
+        const routeColor=el.dataset.routeColor||'#3388ff', poiColor=el.dataset.poiMarkerColor||'#f59e0b';
+        const map=L.map(el,{scrollWheelZoom:false}).setView([first.lat,first.lng],first.zoom||9);
+        L.tileLayer(tileLayer.url,tileLayer.options).addTo(map);
+        const bounds=all.map(function(p){return[p.lat,p.lng];}); if(bounds.length>1) map.fitBounds(bounds,{padding:[40,40]});
 
-        if (!labels.length) {
-            return '';
-        }
-
-        if (labels.length === 1) {
-            return labels[0];
-        }
-
-        if (labels.length === 2) {
-            return labels.join('+');
-        }
-
-        return labels[0] + '-' + labels[labels.length - 1];
-    }
-
-    function groupedRouteMarkers(points, sequence) {
-        const groups = {};
-        const markers = [];
-
-        points.forEach(function (point, index) {
-            point.label = routeLabel(index, sequence);
-            point.number = point.label;
-
-            const key = coordinateKey(point);
-
-            if (!groups[key]) {
-                groups[key] = {
-                    lat: point.lat,
-                    lng: point.lng,
-                    title: point.title || '',
-                    description: point.description || '',
-                    type: point.type || '',
-                    zoom: point.zoom,
-                    kind: 'route',
-                    children: []
-                };
-                markers.push(groups[key]);
-            }
-
-            groups[key].children.push(point);
-        });
-
-        markers.forEach(function (marker) {
-            marker.label = labelRange(marker.children);
-            marker.number = marker.label;
-            marker.isCombined = marker.children.length > 1;
-        });
-
-        return markers;
-    }
-
-    function createRouteIcon(label) {
-        const safeLabel = escapeHtml(label);
-
-        return L.divIcon({
-            className: 'bxtr-marker bxtr-marker--route',
-            html: '<span class="bxtr-marker__route"><svg class="bxtr-marker__route-svg" width="30" height="40" viewBox="0 0 18 22" aria-hidden="true" focusable="false"><path d="M18 9C18 16 9 22 9 22C9 22 0 16 0 9C3.55683e-08 6.61305 0.948211 4.32387 2.63604 2.63604C4.32387 0.948211 6.61305 0 9 0C11.3869 0 13.6761 0.948211 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9Z" fill="currentColor"></path></svg><span class="bxtr-marker__number">' + safeLabel + '</span></span>',
-            iconSize: [30, 40],
-            iconAnchor: [15, 40],
-            popupAnchor: [0, -38]
-        });
-    }
-
-    function poiLabel(point, fallback) {
-        return (point.type || point.title || fallback || 'POI').trim();
-    }
-
-    function createPoiIcon(point, fallbackLabel) {
-        const label = poiLabel(point, fallbackLabel);
-
-        return L.divIcon({
-            className: 'bxtr-marker bxtr-marker--poi',
-            html: '<span class="bxtr-marker__poi">' + escapeHtml(label) + '</span>',
-            iconSize: null,
-            iconAnchor: [0, 14],
-            popupAnchor: [0, -14]
-        });
-    }
-
-    function popupHtml(point, poiLabelFallback) {
-        let heading = '';
-
-        if (point.kind === 'route') {
-            heading = point.title || ('Marker ' + point.number);
-        } else if (point.title) {
-            heading = point.title;
-        } else if (point.type) {
-            heading = point.type;
-        } else {
-            heading = poiLabelFallback || 'Point of Interest';
-        }
-
-        let popup = '<div class="bxtr-popup"><strong>' + escapeHtml(heading) + '</strong>';
-
-        if (point.kind === 'route' && point.isCombined && point.children && point.children.length) {
-            popup += '<ul class="bxtr-popup__combined">';
-            point.children.forEach(function (child) {
-                const childTitle = child.title || ('Marker ' + child.label);
-                popup += '<li><strong>' + escapeHtml(child.label) + '.</strong> ' + escapeHtml(childTitle);
-                if (child.description) {
-                    popup += '<div class="bxtr-popup__description">' + child.description + '</div>';
-                }
-                popup += '</li>';
-            });
-            popup += '</ul>';
-            popup += '</div>';
-            return popup;
-        }
-
-        if (point.kind === 'poi' && point.type && point.title) {
-            popup += '<span class="bxtr-popup__type">' + escapeHtml(point.type) + '</span>';
-        }
-
-        if (point.title && point.kind === 'route') {
-            popup += '<span class="bxtr-popup__title">' + escapeHtml(point.title) + '</span>';
-        }
-
-        if (point.description) {
-            popup += '<div class="bxtr-popup__description">' + point.description + '</div>';
-        }
-
-        popup += '</div>';
-        return popup;
-    }
-
-    mapEls.forEach(function (mapEl) {
-        const markerSequence = mapEl.dataset.markerSequence === 'numeric' ? 'numeric' : 'alphabetic';
-        const stops = normalisePoints(safeJson(mapEl.dataset.stops, []), 'route');
-        const routeMarkers = groupedRouteMarkers(stops, markerSequence);
-        const pois = normalisePoints(safeJson(mapEl.dataset.pois, []), 'poi');
-        const allPoints = routeMarkers.concat(pois);
-
-        if (!allPoints.length) {
-            return;
-        }
-
-        const routeColor = isHex(mapEl.dataset.routeColor, '#3388ff');
-        const poiLabelFallback = (mapEl.dataset.poiLabel || 'Point of Interest').trim() || 'Point of Interest';
-        const drawRoute = mapEl.dataset.drawRoute !== 'no';
-        const tileStyle = tileLayers[mapEl.dataset.tileStyle] ? mapEl.dataset.tileStyle : 'osm';
-        const firstPoint = allPoints[0];
-
-        const map = L.map(mapEl, {
-            scrollWheelZoom: false
-        }).setView([firstPoint.lat, firstPoint.lng], firstPoint.zoom || 8);
-
-        L.tileLayer(tileLayers[tileStyle].url, tileLayers[tileStyle].options).addTo(map);
-
-        const bounds = allPoints.map(function (point) {
-            return [point.lat, point.lng];
-        });
-
-        function fitToBounds(targetBounds) {
-            const pointsToFit = targetBounds || bounds;
-
-            if (pointsToFit.length > 1 && uniqueCoordinateCount(allPoints) > 1) {
-                map.fitBounds(pointsToFit, { padding: [40, 40] });
+        // Cached road geometry. Straight line is used only when no cached route exists.
+        if(el.dataset.drawRoute!=='no' && stops.length>1){
+            const geometry=json(el.dataset.routeGeometry,{});
+            if(geometry && geometry.type==='LineString' && Array.isArray(geometry.coordinates) && geometry.coordinates.length){
+                L.geoJSON(geometry,{style:{color:routeColor,weight:4,opacity:.95}}).addTo(map);
             } else {
-                map.setView(bounds[0], firstPoint.zoom || 10);
+                L.polyline(stops.map(function(p){return[p.lat,p.lng];}),{color:routeColor,weight:3,opacity:.65,dashArray:'7 7'}).addTo(map);
             }
         }
 
-        let markersAdded = false;
-
-        function addMarkers() {
-            if (markersAdded) {
-                return;
+        // Route markers stay ordered. Exact duplicates are fanned slightly so both remain usable.
+        const duplicateCounts={}; stops.forEach(function(p){const k=p.lat.toFixed(6)+','+p.lng.toFixed(6);duplicateCounts[k]=(duplicateCounts[k]||0)+1;});
+        const duplicateSeen={};
+        stops.forEach(function(p,i){
+            let ll=L.latLng(p.lat,p.lng), k=p.lat.toFixed(6)+','+p.lng.toFixed(6);
+            if(duplicateCounts[k]>1){
+                const n=duplicateSeen[k]||0; duplicateSeen[k]=n+1; const angle=(Math.PI*2*n/duplicateCounts[k])-Math.PI/2;
+                const projected=map.project(ll,map.getZoom()).add(L.point(Math.cos(angle)*18,Math.sin(angle)*18)); ll=map.unproject(projected,map.getZoom());
+                L.polyline([[p.lat,p.lng],ll],{color:'#777',weight:1,opacity:.7}).addTo(map);
             }
+            L.marker(ll,{icon:routeIcon(p.label),zIndexOffset:1000+i}).addTo(map).bindPopup(popup(p,p.label));
+        });
 
-            markersAdded = true;
-
-            allPoints.forEach(function (point, index) {
-                const icon = point.kind === 'route'
-                    ? createRouteIcon(point.number)
-                    : createPoiIcon(point, poiLabelFallback);
-
-                L.marker([point.lat, point.lng], {
-                    icon: icon,
-                    zIndexOffset: point.kind === 'route' ? 1000 + index : 500
-                }).addTo(map).bindPopup(popupHtml(point, poiLabelFallback));
-            });
+        const poiLayer=L.layerGroup().addTo(map), spiderLayer=L.layerGroup().addTo(map);
+        function addPoi(point, latlng){ L.marker(latlng||[point.lat,point.lng],{icon:poiIcon(point,poiColor),zIndexOffset:500}).addTo(poiLayer).bindPopup(popup(point,'')); }
+        function spiderfy(group, center){
+            spiderLayer.clearLayers(); poiLayer.clearLayers(); const radius=Math.max(34,group.length*7);
+            group.forEach(function(point,i){const angle=(Math.PI*2*i/group.length)-Math.PI/2; const px=map.latLngToLayerPoint(center).add(L.point(Math.cos(angle)*radius,Math.sin(angle)*radius)); const ll=map.layerPointToLatLng(px); L.polyline([center,ll],{color:'#777',weight:1,opacity:.65}).addTo(spiderLayer); addPoi(point,ll);});
         }
-
-        function addFallbackLine(routePoints) {
-            if (!drawRoute || routePoints.length <= 1) {
-                return null;
+        function renderPois(){
+            spiderLayer.clearLayers(); poiLayer.clearLayers(); if(!pois.length) return;
+            if(el.dataset.clusterPois!=='yes'){pois.forEach(function(p){addPoi(p);});return;}
+            const unused=pois.slice(), radius=44;
+            while(unused.length){
+                const seed=unused.shift(), seedPx=map.latLngToLayerPoint([seed.lat,seed.lng]), group=[seed];
+                for(let i=unused.length-1;i>=0;i--){const px=map.latLngToLayerPoint([unused[i].lat,unused[i].lng]);if(seedPx.distanceTo(px)<=radius){group.push(unused[i]);unused.splice(i,1);}}
+                if(group.length===1){addPoi(seed);continue;}
+                const center=L.latLng(group.reduce((a,p)=>a+p.lat,0)/group.length,group.reduce((a,p)=>a+p.lng,0)/group.length);
+                const marker=L.marker(center,{icon:clusterIcon(group.length),zIndexOffset:700}).addTo(poiLayer);
+                marker.on('click',function(){ if(map.getZoom()<map.getMaxZoom()-1){map.fitBounds(group.map(function(p){return[p.lat,p.lng];}),{padding:[60,60],maxZoom:map.getZoom()+2});}else{spiderfy(group,center);} });
             }
-
-            const routeBounds = routePoints.map(function (point) {
-                return [point.lat, point.lng];
-            });
-
-            return L.polyline(routeBounds, {
-                color: routeColor,
-                weight: 3,
-                opacity: 0.8
-            }).addTo(map);
         }
+        renderPois(); map.on('zoomend moveend',renderPois);
+        setTimeout(function(){map.invalidateSize();},100);
+    }
 
-        const routableStops = uniqueRoutePoints(stops);
-
-        if (drawRoute && routableStops.length > 1) {
-            let fallbackLine = addFallbackLine(routableStops);
-            fitToBounds();
-            addMarkers();
-
-            const osrmCoords = routableStops.map(function (point) {
-                return point.lng + ',' + point.lat;
-            }).join(';');
-
-            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-            const timeoutId = controller ? window.setTimeout(function () { controller.abort(); }, 5000) : null;
-
-            fetch('https://router.project-osrm.org/route/v1/driving/' + osrmCoords + '?overview=full&geometries=geojson', controller ? { signal: controller.signal } : {})
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('OSRM request failed.');
-                    }
-                    return response.json();
-                })
-                .then(function (data) {
-                    if (timeoutId) {
-                        window.clearTimeout(timeoutId);
-                    }
-
-                    if (!data.routes || !data.routes.length) {
-                        throw new Error('No OSRM route found.');
-                    }
-
-                    const routeLayer = L.geoJSON(data.routes[0].geometry, {
-                        style: { color: routeColor, weight: 4, opacity: 0.95 }
-                    }).addTo(map);
-
-                    if (fallbackLine) {
-                        map.removeLayer(fallbackLine);
-                        fallbackLine = null;
-                    }
-
-                    const combinedBounds = routeLayer.getBounds();
-                    allPoints.forEach(function (point) {
-                        combinedBounds.extend([point.lat, point.lng]);
-                    });
-                    map.fitBounds(combinedBounds, { padding: [40, 40] });
-                    addMarkers();
-                })
-                .catch(function (error) {
-                    if (timeoutId) {
-                        window.clearTimeout(timeoutId);
-                    }
-                    console.warn('Baxtersweb Maps: using fallback route line.', error);
-                    addMarkers();
-                });
-        } else {
-            fitToBounds();
-            addMarkers();
-        }
-    });
-});
+    document.querySelectorAll('.bxtr-map[data-stops]').forEach(initMap);
+})();

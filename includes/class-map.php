@@ -16,7 +16,7 @@ class BXTR_Maps_Map
      * @param array<string,string> $overrides
      * @return string
      */
-    public static function render($stops, $pois = [], $diagnostics = [], $template = 'default', $overrides = [])
+    public static function render($stops, $pois = [], $diagnostics = [], $template = 'default', $overrides = [], $route_geometry = [])
     {
         $marker_color = get_option(BXTR_Maps_Plugin::OPTION_MARKER_COLOR, BXTR_Maps_Plugin::DEFAULT_MARKER_COLOR);
         $route_color = get_option(BXTR_Maps_Plugin::OPTION_ROUTE_COLOR, BXTR_Maps_Plugin::DEFAULT_ROUTE_COLOR);
@@ -27,7 +27,8 @@ class BXTR_Maps_Map
         $marker_sequence = get_option(BXTR_Maps_Plugin::OPTION_MARKER_SEQUENCE, BXTR_Maps_Plugin::DEFAULT_MARKER_SEQUENCE);
         $draw_route = get_option(BXTR_Maps_Plugin::OPTION_DRAW_ROUTE, 'yes');
         $poi_enabled = get_option(BXTR_Maps_Plugin::OPTION_POI_ENABLED, 'yes');
-        $map_tile_style = get_option(BXTR_Maps_Plugin::OPTION_MAP_TILE_STYLE, BXTR_Maps_Plugin::DEFAULT_MAP_TILE_STYLE);
+        $map_tile_style = 'osm';
+        $cluster_pois = get_option(BXTR_Maps_Plugin::OPTION_CLUSTER_POIS, 'yes');
 
         if (!empty($overrides['draw_route']) && in_array($overrides['draw_route'], ['yes', 'no'], true)) {
             $draw_route = $overrides['draw_route'];
@@ -71,6 +72,8 @@ class BXTR_Maps_Map
             'border_radius' => $border_radius,
             'marker_sequence' => $marker_sequence,
             'map_tile_style' => $map_tile_style,
+            'cluster_pois' => $cluster_pois,
+            'route_geometry' => is_array($route_geometry) ? $route_geometry : [],
         ], $template);
 
         ob_start();

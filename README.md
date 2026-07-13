@@ -10,7 +10,8 @@ It is built for WordPress developers and site builders who already manage struct
 - Reads map markers from ACF Pro repeater fields.
 - Supports the ACF OpenStreetMap Field location picker.
 - Connects ordered map markers with a route line.
-- Displays optional points of interest as clean text-label markers.
+- Displays POIs using built-in WordPress icons, theme icon classes, or plain markers.
+- Supports per-POI background colours and nearby-marker grouping.
 - Supports posts, pages, and custom post types.
 - Includes one-click ACF field setup.
 - Provides simple style settings for colours, map height, border radius, and marker labels.
@@ -78,13 +79,13 @@ Show only the route layer:
 
 ## External services
 
-Baxtersweb Maps uses external services to display map tiles and route lines. These requests are made from the visitor's browser when a map is displayed.
+Baxtersweb Maps uses external services for map tiles and optional road-route calculation.
 
-- OpenStreetMap Standard tiles are loaded from the OpenStreetMap Foundation tile service when the Standard map style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenStreetMap. Service information: https://operations.osmfoundation.org/policies/tiles/ Privacy policy: https://osmfoundation.org/wiki/Privacy_Policy
-- Humanitarian map tiles are loaded from the OpenStreetMap France Humanitarian tile service when the Humanitarian map style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenStreetMap France. Service information: https://tile.openstreetmap.fr/ Project information: https://www.openstreetmap.fr/
-- OpenTopoMap tiles are loaded from OpenTopoMap when the OpenTopoMap style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenTopoMap. Service information: https://opentopomap.org/ About/credits: https://opentopomap.org/about
-- OSRM demo routing service is used to request route geometry between saved map markers. Map marker coordinates are sent from the visitor's browser to https://router.project-osrm.org/ only when route drawing is enabled and at least two unique map markers exist. Project information: https://project-osrm.org/ Source and usage information: https://github.com/Project-OSRM/osrm-backend
-- Leaflet JavaScript and CSS are bundled locally with the plugin. No CDN is used for Leaflet assets.
+* OpenStreetMap Standard tiles are loaded in the visitor's browser from the OpenStreetMap Foundation tile service whenever a map is displayed. The visitor's IP address, browser details, referring page, and requested tile coordinates may be sent to OpenStreetMap. Tile usage policy: https://operations.osmfoundation.org/policies/tiles/ Terms of Use: https://osmfoundation.org/wiki/Terms_of_Use Privacy policy: https://osmfoundation.org/wiki/Privacy_Policy
+
+* openrouteservice is used only when the site administrator has supplied a valid API key and road geometry needs to be calculated or recalculated. This may occur after route points are saved or changed, after an API key is successfully verified, or when an unrouted map is first rendered. The route coordinates are sent from the WordPress server to https://api.openrouteservice.org/ solely to calculate a road-following route. Returned route geometry is stored in WordPress and reused, so normal visitor views of an already calculated route do not make routing requests. Service and API information: https://openrouteservice.org/ Terms of Service: https://openrouteservice.org/terms-of-service/ Privacy policy: https://openrouteservice.org/privacy-policy/
+
+* Leaflet JavaScript and CSS, WordPress Dashicons, and all Baxtersweb Maps plugin code are loaded locally. No icon CDN is used.
 
 Baxtersweb Maps does not send WordPress user account data to these services.
 
@@ -95,3 +96,11 @@ The plugin source code is included in this plugin package. The JavaScript and CS
 ## License
 
 GPL v2 or later.
+
+
+## 1.1.6
+- Added a bounded 2 km road-snapping retry for rural itinerary points.
+
+## Routing lifecycle
+
+Saved routes remain available when an API key is removed. Adding a valid key later calculates maps that do not yet have saved road geometry. New or changed routes fall back to dashed straight lines whenever routing is unavailable.

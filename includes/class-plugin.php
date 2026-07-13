@@ -11,6 +11,8 @@ class BXTR_Maps_Plugin
     const OPTION_MARKER_NUMBER_COLOR = 'bxtr_marker_number_color';
     const OPTION_FIELD_POST_TYPES = 'bxtr_field_post_types';
     const OPTION_FIELD_SETUP_DONE = 'bxtr_acf_field_setup_done';
+    const OPTION_FIELD_GROUP_MODE = 'bxtr_field_group_mode';
+    const OPTION_FIELD_GROUP_KEY = 'bxtr_field_group_key';
     const OPTION_UNINSTALL_MODE = 'bxtr_uninstall_mode';
     const OPTION_MAP_HEIGHT = 'bxtr_map_height';
     const OPTION_BORDER_RADIUS = 'bxtr_border_radius';
@@ -19,7 +21,14 @@ class BXTR_Maps_Plugin
     const OPTION_POI_ENABLED = 'bxtr_poi_enabled';
     const OPTION_POI_MARKER_COLOR = 'bxtr_poi_marker_color';
     const OPTION_POI_ICON_MODE = 'bxtr_poi_icon_mode';
+    const OPTION_POI_DEFAULT_ICON = 'bxtr_poi_default_icon';
+    const OPTION_POI_THEME_ICON_CLASS = 'bxtr_poi_theme_icon_class';
     const OPTION_MAP_TILE_STYLE = 'bxtr_map_tile_style';
+    const OPTION_ORS_API_KEY = 'bxtr_ors_api_key';
+    const OPTION_CLUSTER_POIS = 'bxtr_cluster_pois';
+    const OPTION_ORS_STATUS = 'bxtr_ors_status';
+    const OPTION_ORS_STATUS_MESSAGE = 'bxtr_ors_status_message';
+    const OPTION_ORS_TESTED_AT = 'bxtr_ors_tested_at';
     const DEFAULT_MARKER_COLOR = '#3d874d';
     const DEFAULT_ROUTE_COLOR = '#3388ff';
     const DEFAULT_MARKER_NUMBER_COLOR = '#ffffff';
@@ -27,7 +36,8 @@ class BXTR_Maps_Plugin
     const DEFAULT_BORDER_RADIUS = '12px';
     const DEFAULT_MARKER_SEQUENCE = 'alphabetic';
     const DEFAULT_POI_MARKER_COLOR = '#f59e0b';
-    const DEFAULT_POI_ICON_MODE = 'none';
+    const DEFAULT_POI_ICON_MODE = 'builtin';
+    const DEFAULT_POI_ICON = 'location-alt';
     const DEFAULT_MAP_TILE_STYLE = 'osm';
     const FIELD_GROUP_KEY = 'group_bxtr_maps';
 
@@ -48,9 +58,11 @@ class BXTR_Maps_Plugin
         require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-acf.php';
         require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-map.php';
         require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-shortcode.php';
+        require_once BXTR_MAPS_PLUGIN_PATH . 'includes/class-routing.php';
 
         new BXTR_Maps_Admin();
         new BXTR_Maps_Shortcode();
+        new BXTR_Maps_Routing();
 
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin']);
@@ -79,6 +91,8 @@ class BXTR_Maps_Plugin
             '1.9.4'
         );
 
+        wp_enqueue_style('dashicons');
+
         wp_enqueue_style(
             'bxtr-style',
             BXTR_MAPS_PLUGIN_URL . 'assets/css/baxtersweb-maps.css',
@@ -101,11 +115,23 @@ class BXTR_Maps_Plugin
             filemtime(BXTR_MAPS_PLUGIN_PATH . 'assets/js/baxtersweb-maps.js'),
             true
         );
+
+
+        wp_localize_script(
+            'bxtr-script',
+            'BXTRMapsFrontend',
+            [
+                'marker' => __('Marker', 'baxtersweb-maps'),
+                'pointOfInterest' => __('Point of Interest', 'baxtersweb-maps'),
+            ]
+        );
     }
 
     public function enqueue_admin($hook)
     {
         if ($hook === 'tools_page_baxtersweb-maps') {
+            wp_enqueue_style('dashicons');
+
             wp_enqueue_style(
                 'bxtr-leaflet',
                 BXTR_MAPS_PLUGIN_URL . 'assets/vendor/leaflet/leaflet.css',

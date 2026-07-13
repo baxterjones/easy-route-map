@@ -45,7 +45,20 @@ class BXTR_Maps_Shortcode
             'poi_enabled' => $atts['poi'] !== '' ? sanitize_key($atts['poi']) : '',
         ];
 
-        return BXTR_Maps_Map::render($map_data['stops'], $map_data['pois'], $map_data['diagnostics'], $template, $overrides);
+        $route_geometry = BXTR_Maps_Routing::ensure_geometry($post_id);
+
+        if (empty($route_geometry) && current_user_can('edit_post', $post_id)) {
+            $route_error = BXTR_Maps_Routing::get_error($post_id);
+            if ($route_error !== '') {
+                $map_data['diagnostics'][] = sprintf(
+                    /* translators: %s: routing service error message. */
+                    __('Road route could not be calculated: %s', 'baxtersweb-maps'),
+                    $route_error
+                );
+            }
+        }
+
+        return BXTR_Maps_Map::render($map_data['stops'], $map_data['pois'], $map_data['diagnostics'], $template, $overrides, $route_geometry);
     }
     private function detect_post_id()
     {

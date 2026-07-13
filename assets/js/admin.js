@@ -1,213 +1,79 @@
-(function () {
-    function bxtrString(key, fallback) {
-        return window.BXTRMapsAdmin && window.BXTRMapsAdmin[key] ? window.BXTRMapsAdmin[key] : fallback;
+(function(){
+'use strict';
+document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.bxtr-colour-control').forEach(function(control){
+        const text=control.querySelector('.bxtr-colour-text'); const picker=control.querySelector('.bxtr-colour-picker');
+        if(!text||!picker)return;
+        picker.addEventListener('input',function(){text.value=picker.value; text.dispatchEvent(new Event('input',{bubbles:true}));});
+        text.addEventListener('input',function(){if(/^#[0-9a-f]{6}$/i.test(text.value))picker.value=text.value;});
+    });
+
+    const fieldModeInputs=document.querySelectorAll('input[name="bxtr_field_group_mode"]');
+    function updateFieldMode(){
+        const selected=document.querySelector('input[name="bxtr_field_group_mode"]:checked');
+        const mode=selected?selected.value:'new';
+        document.querySelectorAll('.bxtr-field-mode').forEach(function(panel){panel.classList.add('is-hidden');});
+        const active=document.querySelector('.bxtr-field-mode--'+mode);
+        if(active)active.classList.remove('is-hidden');
+        document.querySelectorAll('.bxtr-choice-card').forEach(function(card){card.classList.remove('is-selected');});
+        if(selected){const card=selected.closest('.bxtr-choice-card');if(card)card.classList.add('is-selected');}
     }
+    fieldModeInputs.forEach(function(input){input.addEventListener('change',updateFieldMode);});
+    updateFieldMode();
 
-    function setupShortcodeCopyButtons() {
-        var buttons = document.querySelectorAll('.bxtr-copy-shortcode');
+    const iconMode=document.getElementById('bxtr_poi_icon_mode');
+    function updateIconRows(){if(!iconMode)return;document.querySelectorAll('.bxtr-icon-option').forEach(function(row){row.classList.add('is-hidden');});const row=document.querySelector('.bxtr-icon-option--'+iconMode.value);if(row)row.classList.remove('is-hidden');}
+    if(iconMode){iconMode.addEventListener('change',updateIconRows);updateIconRows();}
 
-        if (!buttons.length) {
-            return;
+    const el=document.getElementById('bxtr-preview-map');
+    if(!el||typeof L==='undefined')return;
+    const map=L.map(el,{scrollWheelZoom:false}).setView([-33.925,18.424],12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+    const route=[[-33.925,18.418],[-33.918,18.431],[-33.929,18.441]];
+    function getVar(name,fallback){return getComputedStyle(el).getPropertyValue(name).trim()||fallback;}
+    function escapeHtml(value){const div=document.createElement('div');div.textContent=String(value||'');return div.innerHTML;}
+    function selectedValue(name,fallback){const input=document.querySelector('input[name="'+name+'"]:checked');return input?input.value:fallback;}
+    function routeLabel(index){return selectedValue('bxtr_marker_sequence','alphabetic')==='numeric'?String(index+1):String.fromCharCode(65+index);}
+    function routeIcon(label){return L.divIcon({className:'bxtr-marker bxtr-marker--route',html:'<span class="bxtr-marker__route"><span class="bxtr-marker__number">'+escapeHtml(label)+'</span></span>',iconSize:[30,40],iconAnchor:[15,40],popupAnchor:[0,-36]});}
+
+    let routeLine=null;
+    let routeMarkers=[];
+    function renderRoutePreview(){
+        if(routeLine){map.removeLayer(routeLine);routeLine=null;}
+        routeMarkers.forEach(function(marker){map.removeLayer(marker);});
+        routeMarkers=[];
+        if(selectedValue('bxtr_draw_route','yes')==='yes'){
+            routeLine=L.polyline(route,{color:getVar('--bxtr-route-color','#3388ff'),weight:4}).addTo(map);
         }
-
-        buttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                var targetId = button.getAttribute('data-copy-target');
-                var target = targetId ? document.getElementById(targetId) : null;
-
-                if (!target) {
-                    return;
-                }
-
-                var text = target.textContent || target.innerText || '';
-
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(function () {
-                        button.textContent = bxtrString('copied', 'Copied');
-                        window.setTimeout(function () {
-                            button.textContent = bxtrString('copy', 'Copy');
-                        }, 1600);
-                    });
-                    return;
-                }
-
-                var textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.setAttribute('readonly', 'readonly');
-                textarea.style.position = 'absolute';
-                textarea.style.left = '-9999px';
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                button.textContent = bxtrString('copied', 'Copied');
-                window.setTimeout(function () {
-                    button.textContent = bxtrString('copy', 'Copy');
-                }, 1600);
-            });
+        route.forEach(function(point,index){
+            const marker=L.marker(point,{icon:routeIcon(routeLabel(index))}).addTo(map);
+            if(index===1){
+                const title=(window.BXTRMapsAdmin&&BXTRMapsAdmin.clickedMarkerTitle)||'Example Map Marker';
+                const description=(window.BXTRMapsAdmin&&BXTRMapsAdmin.clickedMarkerDescription)||'This is dummy popup content so you can preview the marker and popup styling.';
+                marker.bindPopup('<div class="bxtr-popup"><strong>'+escapeHtml(title)+'</strong><div class="bxtr-popup__description"><p>'+escapeHtml(description)+'</p></div></div>');
+            }
+            routeMarkers.push(marker);
         });
+        if(routeMarkers[1])routeMarkers[1].openPopup();
     }
 
+    function poiIcon(icon,color,mode){let inner='';if(mode==='theme')inner='<i class="dashicons dashicons-star-filled"></i>';else if(mode!=='plain')inner='<span class="dashicons dashicons-'+icon+'"></span>';return L.divIcon({className:'bxtr-marker bxtr-marker--poi',html:'<span class="bxtr-marker__poi-icon" style="background-color:'+escapeHtml(color)+'">'+inner+'</span>',iconSize:[34,34],iconAnchor:[17,17]});}
+    let poiMarkers=[];
+    function renderPoiPreview(){poiMarkers.forEach(function(m){map.removeLayer(m);});poiMarkers=[];const color=getVar('--bxtr-poi-marker-color','#f59e0b');const mode=iconMode?iconMode.value:'builtin';const icon=(document.getElementById('bxtr_poi_default_icon')||{}).value||'location-alt';const poiLabel=(window.BXTRMapsAdmin&&BXTRMapsAdmin.pointOfInterest)||'Point of Interest';poiMarkers.push(L.marker([-33.921,18.426],{icon:poiIcon(icon,color,mode)}).addTo(map).bindPopup('<strong>'+escapeHtml(poiLabel)+'</strong>'));poiMarkers.push(L.marker([-33.928,18.435],{icon:poiIcon(icon,color,mode)}).addTo(map).bindPopup('<strong>'+escapeHtml((window.BXTRMapsAdmin&&BXTRMapsAdmin.exampleExtraMarker)||'Example supporting point.')+'</strong>'));}
 
-    function setupConfirmForms() {
-        var forms = document.querySelectorAll('.bxtr-confirm-submit[data-confirm-message]');
+    renderRoutePreview();
+    renderPoiPreview();
+    map.fitBounds(route,{paddingTopLeft:[60,90],paddingBottomRight:[60,60],maxZoom:14});
+    setTimeout(function(){map.invalidateSize();map.setZoom(Math.min(map.getZoom()+2,map.getMaxZoom()));if(routeMarkers[1]){routeMarkers[1].openPopup();map.panBy([0,-20],{animate:false});}},150);
 
-        forms.forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                var message = form.getAttribute('data-confirm-message');
-
-                if (message && !window.confirm(message)) {
-                    event.preventDefault();
-                }
-            });
-        });
-    }
-
-    function disableGutenbergFullscreen() {
-        if (typeof wp === 'undefined' || !wp.domReady || !wp.data) {
-            return;
-        }
-
-        wp.domReady(function () {
-            var preferences = wp.data.select('core/preferences');
-            var editor = wp.data.dispatch('core/edit-post');
-
-            if (!preferences || !editor || typeof editor.toggleFeature !== 'function') {
-                return;
-            }
-
-            var isFullscreen = preferences.get('core/edit-post', 'fullscreenMode');
-
-            if (isFullscreen) {
-                editor.toggleFeature('fullscreenMode');
-            }
-        });
-    }
-
-    function setupPreviewSync() {
-        var preview = document.getElementById('bxtr-preview-map');
-
-        if (!preview || typeof L === 'undefined') {
-            return;
-        }
-
-        var markerInput = document.getElementById('bxtr_marker_color');
-        var routeInput = document.getElementById('bxtr_route_color');
-        var markerNumberInput = document.getElementById('bxtr_marker_number_color');
-        var poiInput = document.getElementById('bxtr_poi_marker_color');
-        var drawRouteInput = document.getElementById('bxtr_draw_route');
-        var poiEnabledInput = document.getElementById('bxtr_poi_enabled');
-        var tileInput = document.getElementById('bxtr_map_tile_style');
-        var markerSequenceInput = document.getElementById('bxtr_marker_sequence');
-        var previewMap = null;
-
-        function value(input, fallback) {
-            return input && input.value ? input.value : fallback;
-        }
-
-        function checked(input) {
-            return !input || input.checked;
-        }
-
-        function refreshDataset() {
-            preview.dataset.routeColor = value(routeInput, '#3388ff');
-            preview.dataset.markerColor = value(markerInput, '#3d874d');
-            preview.dataset.markerNumberColor = value(markerNumberInput, '#ffffff');
-            preview.dataset.poiMarkerColor = value(poiInput, '#f59e0b');
-            preview.dataset.drawRoute = checked(drawRouteInput) ? 'yes' : 'no';
-            preview.dataset.tileStyle = value(tileInput, 'osm');
-            preview.dataset.markerSequence = value(markerSequenceInput, 'alphabetic');
-            preview.style.setProperty('--bxtr-marker-color', value(markerInput, '#3d874d'));
-            preview.style.setProperty('--bxtr-marker-number-color', value(markerNumberInput, '#ffffff'));
-            preview.style.setProperty('--bxtr-route-color', value(routeInput, '#3388ff'));
-            preview.style.setProperty('--bxtr-poi-marker-color', value(poiInput, '#f59e0b'));
-        }
-
-        function renderPreview() {
-            refreshDataset();
-            if (previewMap) {
-                previewMap.remove();
-                previewMap = null;
-            }
-
-            preview.innerHTML = '';
-
-            var pois = checked(poiEnabledInput)
-                ? [
-                    { title: bxtrString('pointOfInterest', 'Airport'), type: 'Airport', lat: -33.9715, lng: 18.6021, description: bxtrString('exampleExtraMarker', 'Example supporting point of interest.') }
-                ]
-                : [];
-
-            preview.dataset.stops = JSON.stringify([
-                { title: bxtrString('stopA', 'Marker One'), lat: -33.9249, lng: 18.4241, number: 1, description: bxtrString('exampleRouteStop', 'Example map marker.') },
-                { title: bxtrString('stopB', 'Marker Two - Hout Bay'), lat: -34.0433, lng: 18.3489, number: 2, description: bxtrString('exampleRouteStop', 'Example map marker.') }
-            ]);
-            preview.dataset.pois = JSON.stringify(pois);
-            preview.dataset.markerSequence = value(markerSequenceInput, 'alphabetic');
-
-            // Reuse a tiny local preview instead of relying on the frontend initialiser running again.
-            var map = L.map(preview, { scrollWheelZoom: false, zoomControl: false }).setView([-33.98, 18.47], 9);
-            previewMap = map;
-            var tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-            if (preview.dataset.tileStyle === 'hot') {
-                tileUrl = 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
-            } else if (preview.dataset.tileStyle === 'topo') {
-                tileUrl = 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png';
-            }
-
-            L.tileLayer(tileUrl, { maxZoom: 18, attribution: '&copy; OpenStreetMap contributors' }).addTo(map);
-
-            var markerSequence = value(markerSequenceInput, 'alphabetic');
-            var firstLabel = markerSequence === 'numeric' ? '1' : 'A';
-            var secondLabel = markerSequence === 'numeric' ? '2' : 'B';
-            var routePoints = [[-33.9249, 18.4241], [-34.0433, 18.3489]];
-
-            if (preview.dataset.drawRoute !== 'no') {
-                L.polyline(routePoints, { color: preview.dataset.routeColor, weight: 4, opacity: 0.95 }).addTo(map);
-            }
-
-            var firstPreviewMarker = L.marker(routePoints[0], { icon: L.divIcon({ className: 'bxtr-marker bxtr-marker--route', html: '<span class="bxtr-marker__route"><svg class="bxtr-marker__route-svg" width="30" height="40" viewBox="0 0 18 22" aria-hidden="true" focusable="false"><path d="M18 9C18 16 9 22 9 22C9 22 0 16 0 9C3.55683e-08 6.61305 0.948211 4.32387 2.63604 2.63604C4.32387 0.948211 6.61305 0 9 0C11.3869 0 13.6761 0.948211 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9Z" fill="currentColor"></path></svg><span class="bxtr-marker__number">' + firstLabel + '</span></span>', iconSize: [30, 40], iconAnchor: [15, 40], popupAnchor: [0, -38] }) }).addTo(map).bindPopup('<div class="bxtr-popup"><strong>' + bxtrString('clickedMarkerTitle', 'Example Map Marker') + '</strong><span class="bxtr-popup__title">' + bxtrString('stopA', 'Marker One') + '</span><div class="bxtr-popup__description"><p>' + bxtrString('clickedMarkerDescription', 'This is dummy popup content so you can preview the marker and popup styling.') + '</p></div></div>');
-            L.marker(routePoints[1], { icon: L.divIcon({ className: 'bxtr-marker bxtr-marker--route', html: '<span class="bxtr-marker__route"><svg class="bxtr-marker__route-svg" width="30" height="40" viewBox="0 0 18 22" aria-hidden="true" focusable="false"><path d="M18 9C18 16 9 22 9 22C9 22 0 16 0 9C3.55683e-08 6.61305 0.948211 4.32387 2.63604 2.63604C4.32387 0.948211 6.61305 0 9 0C11.3869 0 13.6761 0.948211 15.364 2.63604C17.0518 4.32387 18 6.61305 18 9Z" fill="currentColor"></path></svg><span class="bxtr-marker__number">' + secondLabel + '</span></span>', iconSize: [30, 40], iconAnchor: [15, 40], popupAnchor: [0, -38] }) }).addTo(map);
-
-            if (checked(poiEnabledInput)) {
-                L.marker([-33.9715, 18.6021], { icon: L.divIcon({ className: 'bxtr-marker bxtr-marker--poi', html: '<span class="bxtr-marker__poi">Airport</span>', iconSize: null, iconAnchor: [0, 14] }) }).addTo(map);
-            }
-
-            var previewBounds = routePoints.slice();
-            if (checked(poiEnabledInput)) {
-                previewBounds.push([-33.9715, 18.6021]);
-            }
-            map.fitBounds(previewBounds, { padding: [55, 55], maxZoom: 9 });
-            window.setTimeout(function () {
-                map.invalidateSize();
-                firstPreviewMarker.openPopup();
-            }, 100);
-        }
-
-        [markerInput, markerNumberInput, routeInput, poiInput, drawRouteInput, poiEnabledInput, tileInput, markerSequenceInput].forEach(function (input) {
-            if (!input) {
-                return;
-            }
-
-            input.addEventListener('input', renderPreview);
-            input.addEventListener('change', renderPreview);
-        });
-
-        renderPreview();
-    }
-
-    function ready() {
-        setupShortcodeCopyButtons();
-        setupConfirmForms();
-        setupPreviewSync();
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', ready);
-    } else {
-        ready();
-    }
-
-    disableGutenbergFullscreen();
-}());
+    function bindStyle(inputName,cssVar,callback){const input=document.querySelector('[name="'+inputName+'"]');if(!input)return;input.addEventListener('input',function(){if(input.value)el.style.setProperty(cssVar,input.value);if(callback)callback(input.value);});}
+    bindStyle('bxtr_marker_color','--bxtr-marker-color',renderRoutePreview);
+    bindStyle('bxtr_marker_number_color','--bxtr-marker-number-color',renderRoutePreview);
+    bindStyle('bxtr_poi_marker_color','--bxtr-poi-marker-color',renderPoiPreview);
+    bindStyle('bxtr_route_color','--bxtr-route-color',function(v){if(routeLine)routeLine.setStyle({color:v});});
+    bindStyle('bxtr_border_radius','--bxtr-border-radius');
+    document.querySelectorAll('input[name="bxtr_draw_route"], input[name="bxtr_marker_sequence"]').forEach(function(input){input.addEventListener('change',renderRoutePreview);});
+    if(iconMode)iconMode.addEventListener('change',renderPoiPreview);
+    const defaultIcon=document.getElementById('bxtr_poi_default_icon');if(defaultIcon)defaultIcon.addEventListener('change',renderPoiPreview);
+});
+})();

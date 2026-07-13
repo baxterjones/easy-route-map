@@ -28,7 +28,9 @@
         data-marker-sequence="<?php echo esc_attr($config['marker_sequence']); ?>"
         data-poi-label="<?php esc_attr_e('Point of Interest', 'baxtersweb-maps'); ?>"
         data-draw-route="<?php echo esc_attr($config['draw_route']); ?>"
+        data-cluster-pois="<?php echo esc_attr($config['cluster_pois']); ?>"
         data-tile-style="<?php echo esc_attr($config['map_tile_style']); ?>"
+        data-route-geometry="<?php echo esc_attr(wp_json_encode($config['route_geometry'])); ?>"
         data-stops="<?php echo esc_attr(wp_json_encode($stops)); ?>"
         data-pois="<?php echo esc_attr(wp_json_encode($pois)); ?>">
     </div>

@@ -4,7 +4,7 @@ Tags: maps, openstreetmap, leaflet, routes, acf
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.6
+Stable tag: 1.1.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Baxtersweb Maps is useful for:
 * Multi-location guides
 * Festival or venue maps
 
-Baxtersweb Maps uses OpenStreetMap and Leaflet, so no Google Maps API key is required.
+Baxtersweb Maps uses OpenStreetMap and Leaflet. A free openrouteservice API key is optional and is used only for calculating road-following routes. Without a key, route markers are joined with a dashed straight line.
 
 = Features =
 
@@ -36,7 +36,9 @@ Baxtersweb Maps uses OpenStreetMap and Leaflet, so no Google Maps API key is req
 * ACF OpenStreetMap Field support for visual location picking
 * Route lines between ordered points
 * Optional points of interest that do not affect the route line
-* Text-label POI markers for flexible map labels
+* Built-in Dashicon, theme-class, or plain POI markers
+* Individual POI background colours
+* Nearby POI grouping with click-to-spread behaviour
 * Alphabetical or numbered route markers
 * Duplicate map marker handling
 * Custom route colour, marker colour, marker text colour, POI colour, map height, border radius, and marker numbering settings
@@ -67,9 +69,10 @@ Read the [Baxtersweb Maps documentation](https://baxtersweb.com/baxtersweb-maps-
 2. Install and activate Advanced Custom Fields Pro.
 3. Install and activate ACF OpenStreetMap Field.
 4. Go to Tools > Baxtersweb Maps.
-5. Click Set up ACF fields for me.
+5. Set up the ACF fields using a new or existing field group.
 6. Add map markers to your content.
-7. Display the map using `[bxtr_map]`.
+7. Optional: add and test an openrouteservice API key under the Routing tab.
+8. Display the map using `[bxtr_map]`.
 
 == Frequently Asked Questions ==
 
@@ -109,13 +112,13 @@ For map height, include a CSS unit such as `500px`, `70vh`, or `40rem`. Percenta
 
 == External Services ==
 
-Baxtersweb Maps uses external services to display map tiles and route lines. These requests are made from the visitor's browser when a map is displayed.
+Baxtersweb Maps uses external services for map tiles and optional road-route calculation.
 
-* OpenStreetMap Standard tiles are loaded from the OpenStreetMap Foundation tile service when the Standard map style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenStreetMap. Service information: https://operations.osmfoundation.org/policies/tiles/ Privacy policy: https://osmfoundation.org/wiki/Privacy_Policy
-* Humanitarian map tiles are loaded from the OpenStreetMap France Humanitarian tile service when the Humanitarian map style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenStreetMap France. Service information: https://tile.openstreetmap.fr/ Project information: https://www.openstreetmap.fr/
-* OpenTopoMap tiles are loaded from OpenTopoMap when the OpenTopoMap style is selected. The visitor's IP address, browser details, referring page, and requested map tile coordinates may be sent to OpenTopoMap. Service information: https://opentopomap.org/ About/credits: https://opentopomap.org/about
-* OSRM demo routing service is used to request route geometry between saved map markers. Map marker coordinates are sent from the visitor's browser to https://router.project-osrm.org/ only when route drawing is enabled and at least two unique map markers exist. Project information: https://project-osrm.org/ Source and usage information: https://github.com/Project-OSRM/osrm-backend
-* Leaflet JavaScript and CSS are bundled locally with the plugin. No CDN is used for Leaflet assets.
+* OpenStreetMap Standard tiles are loaded in the visitor's browser from the OpenStreetMap Foundation tile service whenever a map is displayed. The visitor's IP address, browser details, referring page, and requested tile coordinates may be sent to OpenStreetMap. Tile usage policy: https://operations.osmfoundation.org/policies/tiles/ Terms of Use: https://osmfoundation.org/wiki/Terms_of_Use Privacy policy: https://osmfoundation.org/wiki/Privacy_Policy
+
+* openrouteservice is used only when the site administrator has supplied a valid API key and road geometry needs to be calculated or recalculated. This may occur after route points are saved or changed, after an API key is successfully verified, or when an unrouted map is first rendered. The route coordinates are sent from the WordPress server to https://api.openrouteservice.org/ solely to calculate a road-following route. Returned route geometry is stored in WordPress and reused, so normal visitor views of an already calculated route do not make routing requests. Service and API information: https://openrouteservice.org/ Terms of Service: https://openrouteservice.org/terms-of-service/ Privacy policy: https://openrouteservice.org/privacy-policy/
+
+* Leaflet JavaScript and CSS, WordPress Dashicons, and all Baxtersweb Maps plugin code are loaded locally. No icon CDN is used.
 
 Baxtersweb Maps does not send WordPress user account data to these services.
 
@@ -134,10 +137,45 @@ The plugin source code is included in this plugin package. The JavaScript and CS
 
 == Upgrade Notice ==
 
-= 1.0.6 =
-Initial public release of Baxtersweb Maps.
+= 1.1.9 =
+* Retains existing saved road routes when the API key is removed.
+* Automatically calculates previously unrouted maps when a valid API key is connected.
+* Documents routing lifecycle behaviour on the Routing tab.
+* Resolves the final Plugin Check translator-comment warning.
+Resolves Plugin Check findings without changing plugin behaviour.
 
 == Changelog ==
+
+= 1.1.9 =
+* Existing saved road routes remain available when the API key is removed.
+* Maps without saved road geometry are calculated when a valid API key is connected.
+* Added routing lifecycle guidance beneath the API key field.
+* Fixed the final Plugin Check translator-comment finding.
+
+= 1.1.7 =
+* Fixed global POI background colours on preview and frontend markers.
+* Clearing an API key removes cached road geometry and restores fallback lines.
+* Route visibility and marker sequence update immediately in the style preview.
+* Adjusted marker B's preview popup position.
+
+= 1.1.6 =
+* Retries rural route points with a bounded 2 km road-snapping radius when the default 350 metre search fails.
+* Keeps the exact marker location while routing to the nearest mapped drivable road within that limit.
+
+= 1.1.4 =
+* Fixed road-following routes being calculated but not displayed when cached geometry was missing.
+* Moved route display and route colour into the Styles tab.
+* Renamed Markers & POIs to Styles.
+* Improved the admin preview popup position and zoom.
+
+= 1.1.4 =
+* Added a persistent openrouteservice connection status below the API key.
+* Replaced the separate save and test controls with Save & Test API.
+* Fixed existing maps remaining on dashed fallback lines after connecting the routing API.
+* Opens a route marker popup automatically in the admin preview.
+* Updated documentation and demo links.
+* Improved translation readiness for frontend and admin JavaScript strings.
+* Updated external-service documentation for WordPress.org review.
 
 = 1.0.6 =
 * Moved the settings screen under Tools.
