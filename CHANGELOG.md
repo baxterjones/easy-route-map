@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.10
+
+- Fixed per-POI background colours from ACF fields, including shorthand and values entered without a leading hash.
+- POI clusters now retain a shared custom colour when all grouped POIs use the same colour.
+
+
 ## 1.1.9
 
 - Retain saved road geometry when the routing API key is removed.

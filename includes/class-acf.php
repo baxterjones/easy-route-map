@@ -510,10 +510,35 @@ class BXTR_Maps_ACF
                 'zoom' => (int) ($row[self::POI_LOCATION_FIELD]['zoom'] ?? 10), 'kind' => 'poi', 'number' => $index++,
                 'markerStyle' => $global_style, 'builtinIcon' => $icon,
                 'themeIconClass' => implode(' ', array_filter(array_map('sanitize_html_class', preg_split('/\s+/', $theme_value)))),
-                'color' => sanitize_hex_color($row[self::POI_COLOR_FIELD] ?? '') ?: '',
+                'color' => self::normalise_poi_color($row),
             ];
         }
         return $points;
+    }
+
+
+    private static function normalise_poi_color($row)
+    {
+        $value = '';
+        foreach ([self::POI_COLOR_FIELD, 'bxtr_poi_marker_color', 'field_bxtr_poi_color'] as $key) {
+            if (isset($row[$key]) && $row[$key] !== '') {
+                $value = is_array($row[$key]) ? ($row[$key]['value'] ?? '') : $row[$key];
+                break;
+            }
+        }
+
+        $value = trim((string) $value);
+        if ($value === '') {
+            return '';
+        }
+        if ($value[0] !== '#') {
+            $value = '#' . $value;
+        }
+        if (preg_match('/^#([0-9a-f]{3})$/i', $value, $matches)) {
+            $value = '#' . $matches[1][0] . $matches[1][0] . $matches[1][1] . $matches[1][1] . $matches[1][2] . $matches[1][2];
+        }
+
+        return sanitize_hex_color($value) ?: '';
     }
 
     private static function extract_coordinates($location)

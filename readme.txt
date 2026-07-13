@@ -4,7 +4,7 @@ Tags: maps, openstreetmap, leaflet, routes, acf
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.9
+Stable tag: 1.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -145,6 +145,10 @@ The plugin source code is included in this plugin package. The JavaScript and CS
 Resolves Plugin Check findings without changing plugin behaviour.
 
 == Changelog ==
+
+= 1.1.10 =
+* Fixed per-POI background colours from ACF fields, including shorthand and values entered without a leading hash.
+* POI clusters now retain a shared custom colour when all grouped POIs use the same colour.
 
 = 1.1.9 =
 * Existing saved road routes remain available when the API key is removed.

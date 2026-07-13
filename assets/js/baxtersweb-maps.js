@@ -26,8 +26,9 @@
         else if(point.markerStyle!=='plain') inner='<span class="dashicons dashicons-'+esc(point.builtinIcon)+'" aria-hidden="true"></span>';
         return L.divIcon({className:'bxtr-marker bxtr-marker--poi',html:'<span class="bxtr-marker__poi-icon" style="background-color:'+esc(color)+'">'+inner+'</span>',iconSize:[34,34],iconAnchor:[17,17],popupAnchor:[0,-18]});
     }
-    function clusterIcon(count) {
-        return L.divIcon({className:'bxtr-marker bxtr-marker--cluster',html:'<span class="bxtr-marker__cluster">'+count+'</span>',iconSize:[38,38],iconAnchor:[19,19]});
+    function clusterIcon(count, color) {
+        const style=color?' style="background-color:'+esc(color)+'"':'';
+        return L.divIcon({className:'bxtr-marker bxtr-marker--cluster',html:'<span class="bxtr-marker__cluster"'+style+'>'+count+'</span>',iconSize:[38,38],iconAnchor:[19,19]});
     }
     function popup(point, label) {
         const markerText=(window.BXTRMapsFrontend&&BXTRMapsFrontend.marker)||'Marker';
@@ -89,7 +90,8 @@
                 for(let i=unused.length-1;i>=0;i--){const px=map.latLngToLayerPoint([unused[i].lat,unused[i].lng]);if(seedPx.distanceTo(px)<=radius){group.push(unused[i]);unused.splice(i,1);}}
                 if(group.length===1){addPoi(seed);continue;}
                 const center=L.latLng(group.reduce((a,p)=>a+p.lat,0)/group.length,group.reduce((a,p)=>a+p.lng,0)/group.length);
-                const marker=L.marker(center,{icon:clusterIcon(group.length),zIndexOffset:700}).addTo(poiLayer);
+                const customColors=group.map(function(p){return /^#[0-9a-f]{6}$/i.test(p.color)?p.color.toLowerCase():'';}).filter(Boolean); const clusterColor=customColors.length && customColors.every(function(c){return c===customColors[0];})?customColors[0]:poiColor;
+                const marker=L.marker(center,{icon:clusterIcon(group.length,clusterColor),zIndexOffset:700}).addTo(poiLayer);
                 marker.on('click',function(){ if(map.getZoom()<map.getMaxZoom()-1){map.fitBounds(group.map(function(p){return[p.lat,p.lng];}),{padding:[60,60],maxZoom:map.getZoom()+2});}else{spiderfy(group,center);} });
             }
         }
