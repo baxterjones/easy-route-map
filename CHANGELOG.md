@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.11
+- Updated Name and readme
+
+
 ## 1.1.10
 
 - Fixed per-POI background colours from ACF fields, including shorthand and values entered without a leading hash.

@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Baxtersweb Maps
  * Plugin URI: https://baxtersweb.com/baxtersweb-maps-docs/
- * Description: Build ordered route maps and interactive points of interest from ACF content using OpenStreetMap.
- * Version: 1.1.10
+ * Description: Create interactive OpenStreetMap route maps from ACF Pro repeater fields with connected routes, multiple stops, numbered markers and points of interest.
+ * Version: 1.1.11
  * Author: Baxter Jones
  * Author URI: https://baxtersweb.com
  * License: GPL2+

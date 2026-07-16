@@ -1,22 +1,22 @@
-=== Baxtersweb Maps ===
+=== Baxtersweb Maps – OpenStreetMap Route Maps for ACF ===
 Contributors: baxterjones
-Tags: maps, openstreetmap, leaflet, routes, acf
+Tags: maps, openstreetmap, route maps, acf, advanced custom fields
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create interactive route maps and points of interest from ACF Pro fields.
+Create interactive OpenStreetMap route maps from ACF Pro repeater fields with connected routes, multiple stops, numbered markers and points of interest.
 
 == Description ==
 
-Baxtersweb Maps helps WordPress developers and site builders display route maps from structured ACF Pro field data.
+Baxtersweb Maps lets you create interactive OpenStreetMap route maps directly from ACF Pro repeater fields. Display connected routes, multiple stops, numbered markers and points of interest without manually creating separate maps for every page.
 
-Instead of creating a separate map and embedding it manually, you add map markers directly to posts, pages, or custom post types. Baxtersweb Maps then displays those points as an interactive OpenStreetMap route map using Leaflet.
+Simply add your locations to an ACF repeater attached to any post, page or custom post type, and Baxtersweb Maps generates a responsive Leaflet-powered map from your content.
 
-Baxtersweb Maps is useful for:
+Ideal for:
 
 * Travel itineraries
 * Safari routes
@@ -24,10 +24,12 @@ Baxtersweb Maps is useful for:
 * Cycling routes
 * Road trips
 * Delivery routes
-* Multi-location guides
-* Festival or venue maps
+* Campus or facility guides
+* Festival and event maps
+* Property developments
+* Tourism websites
 
-Baxtersweb Maps uses OpenStreetMap and Leaflet. A free openrouteservice API key is optional and is used only for calculating road-following routes. Without a key, route markers are joined with a dashed straight line.
+Baxtersweb Maps uses OpenStreetMap and Leaflet for map rendering. If you provide a free openrouteservice API key, routes will follow real roads and paths. Without an API key, markers are connected using a dashed straight line.
 
 = Features =
 
@@ -65,7 +67,9 @@ Read the [Baxtersweb Maps documentation](https://baxtersweb.com/baxtersweb-maps-
 
 == Installation ==
 
-1. Upload and activate Baxtersweb Maps.
+Follow the steps below to install Baxtersweb Maps on your site.
+
+1. Search for Baxtersweb Maps, then click install and activate.
 2. Install and activate Advanced Custom Fields Pro.
 3. Install and activate ACF OpenStreetMap Field.
 4. Go to Tools > Baxtersweb Maps.
@@ -145,6 +149,9 @@ The plugin source code is included in this plugin package. The JavaScript and CS
 Resolves Plugin Check findings without changing plugin behaviour.
 
 == Changelog ==
+
+= 1.1.11 =
+* Updated Name and readme
 
 = 1.1.10 =
 * Fixed per-POI background colours from ACF fields, including shorthand and values entered without a leading hash.

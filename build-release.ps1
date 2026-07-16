@@ -24,6 +24,8 @@ $ExcludeFiles = @(
     "build-release.ps1",
     ".gitignore",
     ".gitattributes"
+    "changelog.md"
+    "readme.md"
 )
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
